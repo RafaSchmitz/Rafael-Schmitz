@@ -6,20 +6,37 @@
 package br.edu.utfpr.model;
 
 import java.util.Objects;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 /**
  *
  * @author Rafa
  */
-public class Contatos {
+@Entity
+public class Contatos implements AbstractModel{
     
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
+    @Column(name = "nome", length = 244, nullable = false)
     private String nome;
     
+    @Column(name = "telefone", length = 244, nullable = false)
     private String telefone;
     
+    @Column(name = "email", length = 244, nullable = false)
     private String email;
+    
+    @ManyToOne
+    @JoinColumn(name = "cliente_id", referencedColumnName = "id")
+    private Cliente cliente;
 
     public Contatos() {
     }
@@ -55,6 +72,16 @@ public class Contatos {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+    
+    
 
     @Override
     public int hashCode() {
