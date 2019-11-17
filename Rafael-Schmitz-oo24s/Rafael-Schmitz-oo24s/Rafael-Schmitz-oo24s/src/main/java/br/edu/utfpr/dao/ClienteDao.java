@@ -12,7 +12,7 @@ import java.io.Serializable;
  *
  * @author Rafa
  */
-public class ClienteDao extends GenericDao<Cliente, Long>{
+public class ClienteDao extends GenericDao<Cliente, Integer>{
 
     public ClienteDao() {
         super(Cliente.class);
