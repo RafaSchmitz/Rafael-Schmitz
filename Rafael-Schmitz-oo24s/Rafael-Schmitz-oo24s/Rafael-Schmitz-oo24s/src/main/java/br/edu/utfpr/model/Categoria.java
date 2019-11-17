@@ -23,7 +23,7 @@ public class Categoria implements AbstractModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Long id;
+    private Integer id;
     
     @Column(name = "descricao", length = 50, nullable = false)
     private String descricao;
@@ -31,16 +31,16 @@ public class Categoria implements AbstractModel {
     public Categoria() {
     }
 
-    public Categoria(Long id, String descricao) {
+    public Categoria(Integer id, String descricao) {
         this.id = id;
         this.descricao = descricao;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
