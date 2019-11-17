@@ -15,6 +15,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 /**
  *
@@ -25,7 +26,7 @@ public class Cliente implements AbstractModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @Column(name = "nome", length = 244, nullable = false)
     private String nome;
@@ -43,6 +44,14 @@ public class Cliente implements AbstractModel {
             cascade = {CascadeType.PERSIST, CascadeType.REMOVE},
             fetch = FetchType.LAZY)
     private List<Contatos> contatos;
+    
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER,
+            mappedBy = "cliente")
+    private ReservaQuartoCliente reservaQuarto;
+    
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER,
+            mappedBy = "cliente")
+    private EnderecoCliente enderecoCliente;
 
     public Cliente() {
     }
@@ -55,11 +64,11 @@ public class Cliente implements AbstractModel {
         this.contatos = contatos;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -95,6 +104,23 @@ public class Cliente implements AbstractModel {
         this.numPassaporte = numPassaporte;
     }
 
+    public ReservaQuartoCliente getReservaQuarto() {
+        return reservaQuarto;
+    }
+
+    public void setReservaQuarto(ReservaQuartoCliente reservaQuarto) {
+        this.reservaQuarto = reservaQuarto;
+    }
+
+    public EnderecoCliente getEnderecoCliente() {
+        return enderecoCliente;
+    }
+
+    public void setEnderecoCliente(EnderecoCliente enderecoCliente) {
+        this.enderecoCliente = enderecoCliente;
+    }
+    
+    
     @Override
     public int hashCode() {
         int hash = 5;
