@@ -25,13 +25,12 @@
                         <Menu mnemonicParsing="false" text="Clientes e Contatos...">
                            <items>
                               <MenuItem mnemonicParsing="false" onAction="#loadCliente" text="Clientes" />
-                              <MenuItem mnemonicParsing="false" text="Contatos" />
                            </items>
                         </Menu>
                         <Menu mnemonicParsing="false" text="Quartos e Reservas...">
                           <items>
                               <MenuItem mnemonicParsing="false" text="Reservas" />
-                              <MenuItem mnemonicParsing="false" text="Quartos" />
+                              <MenuItem mnemonicParsing="false" onAction="#loadQuarto" text="Quartos" />
                           </items>
                         </Menu>
                      </items>

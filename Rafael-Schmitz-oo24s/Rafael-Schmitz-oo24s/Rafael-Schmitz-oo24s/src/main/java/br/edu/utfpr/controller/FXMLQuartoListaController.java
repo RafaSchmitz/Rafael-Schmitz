@@ -5,10 +5,8 @@
  */
 package br.edu.utfpr.controller;
 
-import br.edu.utfpr.dao.ServicoDao;
-import br.edu.utfpr.model.Categoria;
-import br.edu.utfpr.model.Produto;
-import br.edu.utfpr.model.Servico;
+import br.edu.utfpr.dao.QuartoDao;
+import br.edu.utfpr.model.Quarto;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -32,60 +30,61 @@ import javafx.stage.Stage;
  *
  * @author Rafa
  */
-public class FXMLServicoListaController implements Initializable {
+public class FXMLQuartoListaController implements Initializable {
 
     @FXML
-    private TableView<Servico> tableData;
+    private TableView<Quarto> tableData;
     @FXML
-    private TableColumn<Servico, Long> columnId;
+    private TableColumn<Quarto, Integer> columnId;
     @FXML
-    private TableColumn<Servico, String> columnNome;
+    private TableColumn<Quarto, Integer> columnNum;
+    @FXML
+    private TableColumn<Quarto, Enum> columnTipo;
+    @FXML
+    private TableColumn<Quarto, Integer> columnCamas;
     
     @FXML
-    private TableColumn<Servico, String> columnDesc;
+    private TableColumn<Quarto, Integer> columnPessoas;
+
     
-    @FXML
-    private TableColumn<Servico, Categoria> columnCat;
-    
-    private ServicoDao servicoDao;
-    private ObservableList<Servico> list = 
+    private QuartoDao quartoDao;
+    private ObservableList<Quarto> list = 
             FXCollections.observableArrayList();
-    
-    /**
-     * Initializes the controller class.
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        this.servicoDao = new ServicoDao();
+        this.quartoDao = new QuartoDao();
         setColumnProperties();
         loadData();
     }    
-
+    
     private void setColumnProperties() {
         columnId.setCellValueFactory(
           new PropertyValueFactory<>("id")
         );
-        columnNome.setCellValueFactory(
-          new PropertyValueFactory<>("nome")
+        columnNum.setCellValueFactory(
+          new PropertyValueFactory<>("numQuarto")
         );
-        columnDesc.setCellValueFactory(
-          new PropertyValueFactory<>("descricao")
+        columnTipo.setCellValueFactory(
+          new PropertyValueFactory<>("tipoQuarto")
         );
-        columnCat.setCellValueFactory(
-          new PropertyValueFactory<>("categoria")
+        columnCamas.setCellValueFactory(
+          new PropertyValueFactory<>("qtdCamas")
+        );
+        columnPessoas.setCellValueFactory(
+          new PropertyValueFactory<>("qtdPessoas")
         );
         
     }
-
+    
     private void loadData() {
         list.clear();
-        list.addAll(servicoDao.getAll());
+        list.addAll(quartoDao.getAll());
         
         tableData.setItems(list);
     }
     
     private void openForm(
-            Servico servico, 
+            Quarto quarto, 
             ActionEvent event) {
         try {
             // Carregar o arquivo fxml e cria um
@@ -93,12 +92,12 @@ public class FXMLServicoListaController implements Initializable {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(
                 this.getClass()
-                    .getResource("/fxml/FXMLServicoCadastro.fxml"));
+                    .getResource("/fxml/FXMLQuartoCadastro.fxml"));
             AnchorPane pane = (AnchorPane) loader.load();
             
             //Criando o stage para o modal
             Stage dialogStage = new Stage();
-            dialogStage.setTitle("Cadastro de Serviços");
+            dialogStage.setTitle("Cadastro de Quartos");
             dialogStage.initModality(Modality.WINDOW_MODAL);
             dialogStage.initOwner(
                     ((Node) event.getSource())
@@ -106,9 +105,9 @@ public class FXMLServicoListaController implements Initializable {
             Scene scene = new Scene(pane);
             dialogStage.setScene(scene);
             
-            FXMLServicoCadastroController controller = 
+            FXMLQuartoCadastroController controller = 
                     loader.getController();
-            controller.setProduto(servico);
+            controller.setQuarto(quarto);
             controller.setDialogStage(dialogStage);
             // Exibe a janela Modal e espera até o usuário
             //fechar
@@ -129,15 +128,15 @@ public class FXMLServicoListaController implements Initializable {
     
     @FXML
     private void edit(ActionEvent event) {
-        Servico servico = 
+        Quarto quarto = 
                 tableData.getSelectionModel()
                     .getSelectedItem();
-        this.openForm(servico, event);
+        this.openForm(quarto, event);
     }
     
     @FXML
     private void newRecord(ActionEvent event) {
-        this.openForm(new Servico(), event);
+        this.openForm(new Quarto(), event);
     }
     
     @FXML
@@ -145,9 +144,9 @@ public class FXMLServicoListaController implements Initializable {
         if (tableData.getSelectionModel()
                 .getSelectedIndex() >=0) {
             try {
-                Servico servico =  tableData
+                Quarto quarto =  tableData
                         .getSelectionModel().getSelectedItem();
-                servicoDao.delete(servico.getId());
+                quartoDao.delete(quarto.getId());
                 tableData.getItems().remove(
                         tableData.getSelectionModel()
                                     .getSelectedIndex());
