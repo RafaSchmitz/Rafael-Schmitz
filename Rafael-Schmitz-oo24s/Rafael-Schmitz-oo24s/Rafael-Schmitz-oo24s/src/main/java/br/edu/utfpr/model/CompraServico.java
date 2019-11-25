@@ -11,7 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class CompraProduto {
+public class CompraServico {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,11 +28,8 @@ public class CompraProduto {
     private Compra compra;
 
     @ManyToOne
-    @JoinColumn(name = "produto_id", referencedColumnName = "id")
-    private Produto produto;
-
-    public CompraProduto() {
-    }
+    @JoinColumn(name = "servico_id", referencedColumnName = "id")
+    private Servico servico;
 
     public Compra getCompra() {
         return compra;
@@ -42,14 +39,17 @@ public class CompraProduto {
         this.compra = compra;
     }
 
-    public Produto getProduto() {
-        return produto;
+    public Servico getServico() {
+        return servico;
     }
 
-    public void setProduto(Produto produto) {
-        this.produto = produto;
+    public void setServico(Servico servico) {
+        this.servico = servico;
     }
-    
+
+    public CompraServico() {
+    }
+
     public Integer getId() {
         return id;
     }
@@ -92,7 +92,7 @@ public class CompraProduto {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final CompraProduto other = (CompraProduto) obj;
+        final CompraServico other = (CompraServico) obj;
         if (!Objects.equals(this.id, other.id)) {
             return false;
         }

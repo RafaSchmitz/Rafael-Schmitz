@@ -36,10 +36,6 @@ public class Cidade implements AbstractModel<Serializable>{
     @ManyToOne
     @JoinColumn(name = "estado_id", referencedColumnName = "id")
     private Estado estado;
-    
-    @OneToMany(mappedBy = "cidade", fetch = FetchType.EAGER,
-    cascade = {CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.MERGE})
-    private List<EnderecoCliente> enderecoClientes;
 
     public Cidade() {
     }
@@ -97,6 +93,11 @@ public class Cidade implements AbstractModel<Serializable>{
             return false;
         }
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return  nome + " - " + estado;
     }
     
     

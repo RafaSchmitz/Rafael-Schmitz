@@ -5,17 +5,17 @@
  */
 package br.edu.utfpr.dao;
 
-import br.edu.utfpr.model.Contatos;
+import br.edu.utfpr.model.Servico;
 import java.io.Serializable;
 
 /**
  *
  * @author Rafa
  */
-public class ContatoDao extends GenericDao<Contatos, Long> {
+public class ServicoDao extends GenericDao<Servico, Long>{
 
-    public ContatoDao() {
-        super(Contatos.class);
+    public ServicoDao() {
+        super(Servico.class);
     }
 
 }

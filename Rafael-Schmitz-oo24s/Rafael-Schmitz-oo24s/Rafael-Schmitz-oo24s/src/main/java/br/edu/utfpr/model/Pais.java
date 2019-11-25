@@ -30,7 +30,7 @@ public class Pais {
     @Column(name = "nome", nullable = false)
     private String nome;
     
-    @OneToMany(mappedBy = "pais", fetch = FetchType.EAGER,
+    @OneToMany(mappedBy = "pais",
     cascade = {CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.MERGE})
     private List<Estado> estados;
 

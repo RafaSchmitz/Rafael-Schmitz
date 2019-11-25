@@ -13,34 +13,35 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import jdk.jfr.Enabled;
 
 /**
  *
  * @author Rafa
  */
 @Entity
-public class Contatos implements AbstractModel{
+public class Servico implements AbstractModel{
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    @Column(name = "nome", length = 244, nullable = false)
+    @Column(name = "nome", length = 50, nullable = false)
     private String nome;
     
-    @Column(name = "telefone", length = 244, nullable = false)
-    private String telefone;
+    @Column(name = "descricao", length = 500, nullable = false)
+    private String descricao;
     
-    @Column(name = "email", length = 244, nullable = false)
-    private String email;
+    @Column(name = "valor")
+    private Double valor; 
     
-    @ManyToOne
-    @JoinColumn(name = "cliente_id", referencedColumnName = "id")
-    private Cliente cliente;
+    @ManyToOne()
+    @JoinColumn(name="categoria_id", referencedColumnName = "id")
+    private Categoria categoria;
 
-    public Contatos() {
+    public Servico() {
     }
-
+    
     public Long getId() {
         return id;
     }
@@ -57,36 +58,34 @@ public class Contatos implements AbstractModel{
         this.nome = nome;
     }
 
-    public String getTelefone() {
-        return telefone;
+    public String getDescricao() {
+        return descricao;
     }
 
-    public void setTelefone(String telefone) {
-        this.telefone = telefone;
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
 
-    public String getEmail() {
-        return email;
+    public Double getValor() {
+        return valor;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setValor(Double valor) {
+        this.valor = valor;
     }
 
-    public Cliente getCliente() {
-        return cliente;
+    public Categoria getCategoria() {
+        return categoria;
     }
 
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
     }
-    
-    
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 23 * hash + Objects.hashCode(this.id);
+        int hash = 5;
+        hash = 13 * hash + Objects.hashCode(this.id);
         return hash;
     }
 
@@ -101,10 +100,12 @@ public class Contatos implements AbstractModel{
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Contatos other = (Contatos) obj;
+        final Servico other = (Servico) obj;
         if (!Objects.equals(this.id, other.id)) {
             return false;
         }
         return true;
     }
+    
+    
 }

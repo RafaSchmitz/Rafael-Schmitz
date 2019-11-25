@@ -5595,3 +5595,7 @@ INSERT INTO CIDADE (id, nome, estado_id) VALUES (5561, 'Tupirama', 27);
 INSERT INTO CIDADE (id, nome, estado_id) VALUES (5562, 'Tupiratins', 27);
 INSERT INTO CIDADE (id, nome, estado_id) VALUES (5563, 'Wanderlandia', 27);
 INSERT INTO CIDADE (id, nome, estado_id) VALUES (5564, 'Xambioa', 27);
+
+INSERT INTO CATEGORIA(id, descricao) VALUES (1, 'Quentes');
+INSERT INTO CATEGORIA(id, descricao) VALUES (2, 'Frios');
+INSERT INTO CATEGORIA(id, descricao) VALUES (3, 'Limpeza');

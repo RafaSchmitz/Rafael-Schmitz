@@ -36,7 +36,7 @@ public class Estado {
     @JoinColumn(name = "pais_id", referencedColumnName = "id")
     private Pais pais;
     
-    @OneToMany(mappedBy = "estado", fetch = FetchType.EAGER,
+    @OneToMany(mappedBy = "estado",
     cascade = {CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.MERGE})
     private List<Cidade> cidades;
 
@@ -98,6 +98,11 @@ public class Estado {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return nome;
     }
     
     

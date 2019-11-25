@@ -28,13 +28,26 @@ public class Compra {
     @JoinColumn(name = "reservaQuartoCliente_id", referencedColumnName = "id")
     private ReservaQuartoCliente reservaQuartoCliente;
     
-    @OneToMany(mappedBy = "compra", fetch = FetchType.EAGER,
+    @OneToMany(mappedBy = "compra",
             cascade = {CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.MERGE})
     private List<CompraProduto> compraProdutos;
+    
+    @OneToMany(mappedBy = "compra",
+            cascade = {CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.MERGE})
+    private List<CompraServico> compraServico;
 
     public Compra() {
     }
 
+    public List<CompraServico> getCompraServico() {
+        return compraServico;
+    }
+
+    public void setCompraServico(List<CompraServico> compraServico) {
+        this.compraServico = compraServico;
+    }
+
+    
     public Long getId() {
         return id;
     }
