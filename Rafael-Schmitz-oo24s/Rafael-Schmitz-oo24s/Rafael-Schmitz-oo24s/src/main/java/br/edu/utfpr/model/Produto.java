@@ -34,7 +34,7 @@ public class Produto implements AbstractModel{
     
     @Column(name = "valor")
     private Double valor; 
-    
+     
     @ManyToOne()
     @JoinColumn(name="categoria_id", referencedColumnName = "id")
     private Categoria categoria;
@@ -82,6 +82,12 @@ public class Produto implements AbstractModel{
         this.categoria = categoria;
     }
 
+    @Override
+    public String toString() {
+        return  nome;
+    }
+
+    
     @Override
     public int hashCode() {
         int hash = 5;

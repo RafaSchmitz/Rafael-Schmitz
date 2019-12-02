@@ -5,16 +5,17 @@
  */
 package br.edu.utfpr.dao;
 
-import br.edu.utfpr.model.ReservaQuartoCliente;
+import br.edu.utfpr.model.CompraProduto;
 import java.io.Serializable;
 
 /**
  *
  * @author Rafa
  */
-public class ReservaQuartoClienteDao extends GenericDao<ReservaQuartoCliente, Long>{
+public class CompraProdutoDao extends GenericDao<CompraProduto, Long>{
 
-    public ReservaQuartoClienteDao() {
-        super(ReservaQuartoCliente.class);
-    }  
+    public CompraProdutoDao() {
+        super(CompraProduto.class);
+    }
+    
 }

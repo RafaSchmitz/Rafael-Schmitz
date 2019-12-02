@@ -191,4 +191,11 @@ public class Cliente implements AbstractModel {
         return true;
     }
 
+    @Override
+    public String toString() {
+        return nome;
+    }
+    
+    
+
 }

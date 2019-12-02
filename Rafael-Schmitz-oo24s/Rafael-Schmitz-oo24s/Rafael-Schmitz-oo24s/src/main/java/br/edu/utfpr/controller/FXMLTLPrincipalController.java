@@ -88,4 +88,12 @@ public class FXMLTLPrincipalController implements Initializable {
                 "/fxml/FXMLQuartoLista.fxml"
         ));
     }
+    
+    @FXML
+    public void loadReserva(ActionEvent event)
+            throws IOException {
+        setDataPane(openVBox(
+                "/fxml/FXMLReservaLista.fxml"
+        ));
+    }
 }

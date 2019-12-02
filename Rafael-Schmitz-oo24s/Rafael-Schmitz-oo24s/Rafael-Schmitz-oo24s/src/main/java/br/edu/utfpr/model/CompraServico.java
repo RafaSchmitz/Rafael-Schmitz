@@ -1,5 +1,6 @@
 package br.edu.utfpr.model;
 
+import java.time.LocalDate;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
@@ -22,22 +23,17 @@ public class CompraServico {
 
     @Column(nullable = false)
     private Double valor;
-
-    @ManyToOne
-    @JoinColumn(name = "compra_id", referencedColumnName = "id")
-    private Compra compra;
+    
+    @Column(nullable = false)
+    private LocalDate date;
+    
+    @ManyToOne()
+    @JoinColumn(name = "reservaQuartoCliente_id", referencedColumnName = "id")
+    private ReservaQuartoCliente reservaQuartoCliente;
 
     @ManyToOne
     @JoinColumn(name = "servico_id", referencedColumnName = "id")
     private Servico servico;
-
-    public Compra getCompra() {
-        return compra;
-    }
-
-    public void setCompra(Compra compra) {
-        this.compra = compra;
-    }
 
     public Servico getServico() {
         return servico;
@@ -74,6 +70,23 @@ public class CompraServico {
         this.valor = valor;
     }
 
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+    public ReservaQuartoCliente getReservaQuartoCliente() {
+        return reservaQuartoCliente;
+    }
+
+    public void setReservaQuartoCliente(ReservaQuartoCliente reservaQuartoCliente) {
+        this.reservaQuartoCliente = reservaQuartoCliente;
+    }
+
+    
     @Override
     public int hashCode() {
         int hash = 7;

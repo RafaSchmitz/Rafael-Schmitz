@@ -5,11 +5,11 @@
  */
 package br.edu.utfpr.controller;
 
-import br.edu.utfpr.dao.ServicoDao;
-import br.edu.utfpr.model.Categoria;
-import br.edu.utfpr.model.Produto;
+import br.edu.utfpr.dao.ReservaQuartoClienteDao;
+import br.edu.utfpr.model.ReservaQuartoCliente;
 import br.edu.utfpr.model.Servico;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -20,6 +20,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -32,60 +33,65 @@ import javafx.stage.Stage;
  *
  * @author Rafa
  */
-public class FXMLServicoListaController implements Initializable {
+public class FXMLReservaListaController implements Initializable {
 
     @FXML
-    private TableView<Servico> tableData;
+    private TableView<ReservaQuartoCliente> tableData;
     @FXML
-    private TableColumn<Servico, Long> columnId;
+    private TableColumn<ReservaQuartoCliente, Long> columnId;
     @FXML
-    private TableColumn<Servico, String> columnNome;
-    
+    private TableColumn<ReservaQuartoCliente, String> columnCliente;
     @FXML
-    private TableColumn<Servico, String> columnDesc;
-    
+    private TableColumn<ReservaQuartoCliente, String> columnQuarto;
     @FXML
-    private TableColumn<Servico, Categoria> columnCat;
-    
-    private ServicoDao servicoDao;
-    private ObservableList<Servico> list = 
+    private TableColumn<ReservaQuartoCliente, LocalDate> columnCheckIn;
+    @FXML
+    private TableColumn<ReservaQuartoCliente, LocalDate> columnCheckOut;
+    @FXML
+    private TableColumn<ReservaQuartoCliente, Double> columnDiaria;
+      
+    private ReservaQuartoClienteDao reservaQuartoClienteDao;
+    private ObservableList<ReservaQuartoCliente> list = 
             FXCollections.observableArrayList();
     
-    /**
-     * Initializes the controller class.
-     */
-    @Override
+    
     public void initialize(URL url, ResourceBundle rb) {
-        this.servicoDao = new ServicoDao();
+        this.reservaQuartoClienteDao = new ReservaQuartoClienteDao();
         setColumnProperties();
         loadData();
-    }    
-
-    private void setColumnProperties() {
+    } 
+    
+     private void setColumnProperties() {
         columnId.setCellValueFactory(
           new PropertyValueFactory<>("id")
         );
-        columnNome.setCellValueFactory(
-          new PropertyValueFactory<>("nome")
+        columnCliente.setCellValueFactory(
+          new PropertyValueFactory<>("cliente")
         );
-        columnDesc.setCellValueFactory(
-          new PropertyValueFactory<>("descricao")
+        columnQuarto.setCellValueFactory(
+          new PropertyValueFactory<>("quarto")
         );
-        columnCat.setCellValueFactory(
-          new PropertyValueFactory<>("categoria")
+        columnCheckIn.setCellValueFactory(
+          new PropertyValueFactory<>("dtIni")
+        );
+        columnCheckOut.setCellValueFactory(
+          new PropertyValueFactory<>("dtFim")
+        );
+        columnDiaria.setCellValueFactory(
+          new PropertyValueFactory<>("vlrDiaria")
         );
         
     }
 
     private void loadData() {
         list.clear();
-        list.addAll(servicoDao.getAll());
+        list.addAll(reservaQuartoClienteDao.getAll());
         
         tableData.setItems(list);
     }
     
     private void openForm(
-            Servico servico, 
+            ReservaQuartoCliente reservaQuartoCliente, 
             ActionEvent event) {
         try {
             // Carregar o arquivo fxml e cria um
@@ -93,12 +99,12 @@ public class FXMLServicoListaController implements Initializable {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(
                 this.getClass()
-                    .getResource("/fxml/FXMLServicoCadastro.fxml"));
+                    .getResource("/fxml/FXMLReservaCadastro.fxml"));
             AnchorPane pane = (AnchorPane) loader.load();
             
             //Criando o stage para o modal
             Stage dialogStage = new Stage();
-            dialogStage.setTitle("Cadastro de Serviços");
+            dialogStage.setTitle("Cadastro de Reservas");
             dialogStage.initModality(Modality.WINDOW_MODAL);
             dialogStage.initOwner(
                     ((Node) event.getSource())
@@ -106,9 +112,9 @@ public class FXMLServicoListaController implements Initializable {
             Scene scene = new Scene(pane);
             dialogStage.setScene(scene);
             
-            FXMLServicoCadastroController controller = 
+            FXMLReservaCadastroController controller = 
                     loader.getController();
-            controller.setServico(servico);
+            controller.setReserva(reservaQuartoCliente);
             controller.setDialogStage(dialogStage);
             // Exibe a janela Modal e espera até o usuário
             //fechar
@@ -129,15 +135,15 @@ public class FXMLServicoListaController implements Initializable {
     
     @FXML
     private void edit(ActionEvent event) {
-        Servico servico = 
+        ReservaQuartoCliente reservaQuartoCliente = 
                 tableData.getSelectionModel()
                     .getSelectedItem();
-        this.openForm(servico, event);
+        this.openForm(reservaQuartoCliente, event);
     }
     
     @FXML
     private void newRecord(ActionEvent event) {
-        this.openForm(new Servico(), event);
+        this.openForm(new ReservaQuartoCliente(), event);
     }
     
     @FXML
@@ -145,9 +151,9 @@ public class FXMLServicoListaController implements Initializable {
         if (tableData.getSelectionModel()
                 .getSelectedIndex() >=0) {
             try {
-                Servico servico =  tableData
+                ReservaQuartoCliente reservaQuartoCliente =  tableData
                         .getSelectionModel().getSelectedItem();
-                servicoDao.delete(servico.getId());
+                reservaQuartoClienteDao.delete(reservaQuartoCliente.getId());
                 tableData.getItems().remove(
                         tableData.getSelectionModel()
                                     .getSelectedIndex());

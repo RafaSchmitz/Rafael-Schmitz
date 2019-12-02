@@ -61,7 +61,7 @@ public class FXMLServicoCadastroController implements Initializable {
         this.stage = stage;
     }
     
-    public void setProduto(Servico servico) {
+    public void setServico(Servico servico) {
         this.servico = servico;
         if (servico.getId() != null) {
             textId.setText(servico.getId().toString());

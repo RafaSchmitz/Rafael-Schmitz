@@ -28,7 +28,7 @@ public class ReservaQuartoCliente implements AbstractModel{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
     
     @OneToOne
     @JoinColumn(name = "cliente_id", referencedColumnName = "id")
@@ -54,17 +54,20 @@ public class ReservaQuartoCliente implements AbstractModel{
     private Double vlrDiaria;
     
     @OneToMany(mappedBy = "reservaQuartoCliente", cascade = CascadeType.ALL)
-    private List<Compra> compra;
+    private List<CompraProduto> compraProdutos;
+    
+    @OneToMany(mappedBy = "reservaQuartoCliente", cascade = CascadeType.ALL)
+    private List<CompraServico> compraServicos;
         
 
     public ReservaQuartoCliente() {
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -124,13 +127,23 @@ public class ReservaQuartoCliente implements AbstractModel{
         this.quarto = quarto;
     }
 
-    public List<Compra> getCompra() {
-        return compra;
+    public List<CompraProduto> getCompraProdutos() {
+        return compraProdutos;
     }
 
-    public void setCompra(List<Compra> compra) {
-        this.compra = compra;
+    public void setCompraProdutos(List<CompraProduto> compraProdutos) {
+        this.compraProdutos = compraProdutos;
     }
+
+    public List<CompraServico> getCompraServicos() {
+        return compraServicos;
+    }
+
+    public void setCompraServicos(List<CompraServico> compraServicos) {
+        this.compraServicos = compraServicos;
+    }
+
+    
     
     
     @Override

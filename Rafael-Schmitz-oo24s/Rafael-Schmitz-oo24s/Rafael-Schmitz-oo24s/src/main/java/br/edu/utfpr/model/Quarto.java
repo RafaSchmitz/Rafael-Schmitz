@@ -125,4 +125,11 @@ public class Quarto implements AbstractModel<Serializable>{
         return true;
     }
 
+    @Override
+    public String toString() {
+        return numQuarto + " - " + tipoQuarto ;
+    }
+    
+    
+
 }

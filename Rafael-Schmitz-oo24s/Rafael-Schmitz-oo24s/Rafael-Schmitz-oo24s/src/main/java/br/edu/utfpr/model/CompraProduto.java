@@ -1,5 +1,7 @@
 package br.edu.utfpr.model;
 
+import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
@@ -11,35 +13,30 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class CompraProduto {
+public class CompraProduto implements AbstractModel<Serializable>{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     @Column(nullable = false)
     private Integer quantidade;
 
     @Column(nullable = false)
     private Double valor;
+    
+    @Column(nullable = false)
+    private LocalDate date;
+    
+    @ManyToOne()
+    @JoinColumn(name = "reservaQuartoCliente_id", referencedColumnName = "id")
+    private ReservaQuartoCliente reservaQuartoCliente;
 
-    @ManyToOne
-    @JoinColumn(name = "compra_id", referencedColumnName = "id")
-    private Compra compra;
-
-    @ManyToOne
+    @ManyToOne()
     @JoinColumn(name = "produto_id", referencedColumnName = "id")
     private Produto produto;
 
     public CompraProduto() {
-    }
-
-    public Compra getCompra() {
-        return compra;
-    }
-
-    public void setCompra(Compra compra) {
-        this.compra = compra;
     }
 
     public Produto getProduto() {
@@ -50,11 +47,11 @@ public class CompraProduto {
         this.produto = produto;
     }
     
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -74,6 +71,22 @@ public class CompraProduto {
         this.valor = valor;
     }
 
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+    public ReservaQuartoCliente getReservaQuartoCliente() {
+        return reservaQuartoCliente;
+    }
+
+    public void setReservaQuartoCliente(ReservaQuartoCliente reservaQuartoCliente) {
+        this.reservaQuartoCliente = reservaQuartoCliente;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 7;
