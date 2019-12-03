@@ -1,5 +1,6 @@
 package br.edu.utfpr.model;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 import javax.persistence.Column;
@@ -12,11 +13,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class CompraServico {
+public class CompraServico implements AbstractModel<Serializable>{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     @Column(nullable = false)
     private Integer quantidade;
@@ -46,11 +47,11 @@ public class CompraServico {
     public CompraServico() {
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

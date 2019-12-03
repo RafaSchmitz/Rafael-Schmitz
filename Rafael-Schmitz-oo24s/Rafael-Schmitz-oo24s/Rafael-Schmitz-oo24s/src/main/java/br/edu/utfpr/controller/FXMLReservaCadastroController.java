@@ -10,7 +10,7 @@ import br.edu.utfpr.dao.QuartoDao;
 import br.edu.utfpr.dao.ReservaQuartoClienteDao;
 import br.edu.utfpr.model.Cliente;
 import br.edu.utfpr.model.CompraProduto;
-import br.edu.utfpr.model.Produto;
+import br.edu.utfpr.model.CompraServico;
 import br.edu.utfpr.model.Quarto;
 import br.edu.utfpr.model.ReservaQuartoCliente;
 import java.io.IOException;
@@ -65,20 +65,10 @@ public class FXMLReservaCadastroController implements Initializable {
     private QuartoDao quartoDao;
     private Stage stage;
     private ReservaQuartoCliente reservaQuartoCliente;
-    private FXMLReservaProdController fXMLReservaProdController;
     private List<CompraProduto> compraProdutos;
+    private List<CompraServico> compraServicos;
     
-    
- 
-    
-    // opcao 2
-    /*
-        Cria a lista dos produtos ou servicos aqui, e,
-    cria um metodo no ReservaProd que recebe um objeto FXMLReservaCadastroController
-    aqui nesta classe ao chamar o metodo voce para 'this'
-    cria um metodo publico nesta classe que recebe a lista dos produtos
-        
-    */
+
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -99,6 +89,7 @@ public class FXMLReservaCadastroController implements Initializable {
         
         
         compraProdutos = new ArrayList<>();
+        compraServicos = new ArrayList<>();
     }
     
     
@@ -131,12 +122,40 @@ public class FXMLReservaCadastroController implements Initializable {
         ft.play();
         return v;
     }
+        public VBox openVBoxServ(String url) throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(
+                this.getClass()
+                    .getResource(url));
+        VBox v = (VBox) loader.load();
+        FadeTransition ft = new FadeTransition(
+                Duration.millis(1000));
+        ft.setNode(v);
+        ft.setFromValue(0.1);
+        ft.setToValue(1);
+        ft.setCycleCount(1);
+        ft.setAutoReverse(false);
+        FXMLReservaServController reservaServController = loader.getController();
+        reservaServController.setCompraServicos(compraServicos);
+        
+        
+        ft.play();
+        return v;
+    }
     
     @FXML
-    public void loadVendas(ActionEvent event)
+    public void loadVendaProd(ActionEvent event)
             throws IOException {
         setDataPane(openVBox(
                 "/fxml/FXMLReservaProdServ.fxml"
+        ));
+    }
+    
+    @FXML
+    public void loadVendaServ(ActionEvent event)
+            throws IOException {
+        setDataPane(openVBoxServ(
+                "/fxml/FXMLReservaServ.fxml"
         ));
     }
     public void setReserva(ReservaQuartoCliente reservaQuartoCliente) {
@@ -162,7 +181,11 @@ public class FXMLReservaCadastroController implements Initializable {
     private void save() {
         compraProdutos.forEach( cp -> cp.setReservaQuartoCliente(reservaQuartoCliente));
         
+        compraServicos.forEach( cp -> cp.setReservaQuartoCliente(reservaQuartoCliente));
+        
         reservaQuartoCliente.setCompraProdutos(compraProdutos);
+        
+        reservaQuartoCliente.setCompraServicos(compraServicos);
         
         reservaQuartoCliente.setCliente(comboClientes.getSelectionModel()
                         .getSelectedItem());

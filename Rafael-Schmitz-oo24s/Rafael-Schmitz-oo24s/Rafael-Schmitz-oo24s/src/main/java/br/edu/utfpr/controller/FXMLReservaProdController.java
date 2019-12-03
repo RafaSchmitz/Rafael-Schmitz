@@ -34,8 +34,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
  */
 public class FXMLReservaProdController implements Initializable {
     
-    private FXMLReservaCadastroController cadastroController;
-
     @FXML
     private TableView<CompraProduto> tableData;
     @FXML
@@ -127,10 +125,7 @@ public class FXMLReservaProdController implements Initializable {
         compraProduto.setProduto(comboProduto.getSelectionModel().getSelectedItem());
         compraProduto.setQuantidade(Integer.parseInt(textQuantidade.getText()));
         compraProduto.setValor(Double.parseDouble(textValor.getText()));
-        this.compraProdutos.add(compraProduto);
-        setColumnProperties();
-        loadData();
-        
+        this.compraProdutos.add(compraProduto);   
     }
     
 

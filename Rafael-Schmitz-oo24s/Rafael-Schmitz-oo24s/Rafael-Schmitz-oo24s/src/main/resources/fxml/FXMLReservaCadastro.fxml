@@ -42,8 +42,8 @@
         <menus>
           <Menu mnemonicParsing="false" text="Produtos e Serviços">
             <items>
-              <MenuItem mnemonicParsing="false" text="Serviços" />
-                  <MenuItem mnemonicParsing="false" onAction="#loadVendas" text="Produtos" />
+              <MenuItem mnemonicParsing="false" onAction="#loadVendaServ" text="Serviços" />
+                  <MenuItem mnemonicParsing="false" onAction="#loadVendaProd" text="Produtos" />
             </items>
           </Menu>
         </menus>
