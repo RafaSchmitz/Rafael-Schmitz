@@ -83,6 +83,14 @@ public class Servico implements AbstractModel{
     }
 
     @Override
+    public String toString() {
+        return nome;
+    }
+    
+    
+    
+
+    @Override
     public int hashCode() {
         int hash = 5;
         hash = 13 * hash + Objects.hashCode(this.id);

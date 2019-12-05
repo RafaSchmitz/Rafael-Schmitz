@@ -67,8 +67,6 @@ public class FXMLReservaCadastroController implements Initializable {
     private ReservaQuartoCliente reservaQuartoCliente;
     private List<CompraProduto> compraProdutos;
     private List<CompraServico> compraServicos;
-    
-
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -86,18 +84,15 @@ public class FXMLReservaCadastroController implements Initializable {
                         quartoDao.getAll()
                 );
         this.comboQuarto.setItems(quartos);
-        
-        
-        compraProdutos = new ArrayList<>();
-        compraServicos = new ArrayList<>();
+
+        // compraProdutos = new ArrayList<>();
+//         compraServicos = new ArrayList<>();
     }
-    
-    
 
     public void setDialogStage(Stage stage) {
         this.stage = stage;
     }
-    
+
     public void setDataPane(Node node) {
         boxVendas.getChildren().setAll(node);
     }
@@ -106,7 +101,7 @@ public class FXMLReservaCadastroController implements Initializable {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(
                 this.getClass()
-                    .getResource(url));
+                        .getResource(url));
         VBox v = (VBox) loader.load();
         FadeTransition ft = new FadeTransition(
                 Duration.millis(1000));
@@ -116,17 +111,18 @@ public class FXMLReservaCadastroController implements Initializable {
         ft.setCycleCount(1);
         ft.setAutoReverse(false);
         FXMLReservaProdController reservaProdController = loader.getController();
+
         reservaProdController.setCompraProdutos(compraProdutos);
-        
-        
+
         ft.play();
         return v;
     }
-        public VBox openVBoxServ(String url) throws IOException {
+
+    public VBox openVBoxServ(String url) throws IOException {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(
                 this.getClass()
-                    .getResource(url));
+                        .getResource(url));
         VBox v = (VBox) loader.load();
         FadeTransition ft = new FadeTransition(
                 Duration.millis(1000));
@@ -136,13 +132,13 @@ public class FXMLReservaCadastroController implements Initializable {
         ft.setCycleCount(1);
         ft.setAutoReverse(false);
         FXMLReservaServController reservaServController = loader.getController();
+        
         reservaServController.setCompraServicos(compraServicos);
-        
-        
+
         ft.play();
         return v;
     }
-    
+
     @FXML
     public void loadVendaProd(ActionEvent event)
             throws IOException {
@@ -150,7 +146,7 @@ public class FXMLReservaCadastroController implements Initializable {
                 "/fxml/FXMLReservaProdServ.fxml"
         ));
     }
-    
+
     @FXML
     public void loadVendaServ(ActionEvent event)
             throws IOException {
@@ -158,6 +154,7 @@ public class FXMLReservaCadastroController implements Initializable {
                 "/fxml/FXMLReservaServ.fxml"
         ));
     }
+
     public void setReserva(ReservaQuartoCliente reservaQuartoCliente) {
         this.reservaQuartoCliente = reservaQuartoCliente;
         if (reservaQuartoCliente.getId() != null) {
@@ -169,6 +166,8 @@ public class FXMLReservaCadastroController implements Initializable {
             dtCheckOut.setValue(reservaQuartoCliente.getDtFim());
             txtDiaria.setText(String.valueOf(reservaQuartoCliente.getVlrDiaria()));
             taMotivo.setText(reservaQuartoCliente.getMotivo());
+            compraProdutos = reservaQuartoCliente.getCompraProdutos();
+            compraServicos = reservaQuartoCliente.getCompraServicos();
         }
     }
 
@@ -179,26 +178,26 @@ public class FXMLReservaCadastroController implements Initializable {
 
     @FXML
     private void save() {
-        compraProdutos.forEach( cp -> cp.setReservaQuartoCliente(reservaQuartoCliente));
-        
-        compraServicos.forEach( cp -> cp.setReservaQuartoCliente(reservaQuartoCliente));
-        
+        compraProdutos.forEach(cp -> cp.setReservaQuartoCliente(reservaQuartoCliente));
+
+        compraServicos.forEach(cs -> cs.setReservaQuartoCliente(reservaQuartoCliente));
+
         reservaQuartoCliente.setCompraProdutos(compraProdutos);
-        
+
         reservaQuartoCliente.setCompraServicos(compraServicos);
-        
+
         reservaQuartoCliente.setCliente(comboClientes.getSelectionModel()
-                        .getSelectedItem());
+                .getSelectedItem());
         reservaQuartoCliente.setQuarto(comboQuarto.getSelectionModel()
-                        .getSelectedItem());
+                .getSelectedItem());
         reservaQuartoCliente.setDtReserva(dtReserva.getValue());
         reservaQuartoCliente.setDtIni(dtCheckIn.getValue());
         reservaQuartoCliente.setDtFim(dtCheckOut.getValue());
         reservaQuartoCliente.setVlrDiaria(Double.parseDouble(txtDiaria.getText()));
         reservaQuartoCliente.setMotivo(taMotivo.getText());
-        
+
         this.reservaQuartoClienteDao.save(reservaQuartoCliente);
         this.stage.close();
     }
-   
+
 }

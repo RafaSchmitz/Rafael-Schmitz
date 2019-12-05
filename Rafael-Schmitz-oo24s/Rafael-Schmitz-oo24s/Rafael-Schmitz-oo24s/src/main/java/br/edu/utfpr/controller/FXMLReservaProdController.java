@@ -10,9 +10,9 @@ import br.edu.utfpr.dao.ProdutoDao;
 import br.edu.utfpr.dao.ReservaQuartoClienteDao;
 import br.edu.utfpr.model.CompraProduto;
 import br.edu.utfpr.model.Produto;
-import br.edu.utfpr.model.ReservaQuartoCliente;
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -26,6 +26,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javax.swing.JOptionPane;
 
 /**
  * FXML Controller class
@@ -33,7 +34,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
  * @author Rafa
  */
 public class FXMLReservaProdController implements Initializable {
-    
+
     @FXML
     private TableView<CompraProduto> tableData;
     @FXML
@@ -59,6 +60,7 @@ public class FXMLReservaProdController implements Initializable {
     private TextField textValor;
 
     private List<CompraProduto> compraProdutos;
+    private CompraProduto compraProduto;
     private ObservableList<CompraProduto> list
             = FXCollections.observableArrayList();
 
@@ -68,21 +70,38 @@ public class FXMLReservaProdController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        // this.compraProdutos = new ArrayList<>();
         this.compraProdutoDao = new CompraProdutoDao();
-
         this.produtoDao = new ProdutoDao();
         ObservableList<Produto> produtos
                 = FXCollections.observableArrayList(
                         produtoDao.getAll()
                 );
         this.comboProduto.setItems(produtos);
-        
+        compraProduto = new CompraProduto();
         setColumnProperties();
         loadData();
     }
-    
-    public void setCompraProdutos(List<CompraProduto> compraProdutos){
-        this.compraProdutos = compraProdutos;
+
+    @FXML
+    private void setValorProduto(ActionEvent event) {
+
+        if (comboProduto.getItems().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Selecione um produto!");
+        }
+        Double valorTotal = this.comboProduto.getSelectionModel().
+                getSelectedItem().getValor() * Double.parseDouble(textQuantidade.getText());
+        textValor.setText(valorTotal.toString());
+
+    }
+
+    public void setCompraProdutos(List<CompraProduto> compraProdutos) {
+        if (compraProdutos == null) {
+            this.compraProdutos = new ArrayList<>();
+        } else {
+            this.compraProdutos = compraProdutos;
+        }
+        loadData();
     }
 
     private void setColumnProperties() {
@@ -104,30 +123,49 @@ public class FXMLReservaProdController implements Initializable {
 
     }
 
+    @FXML
+    private void edit() {
+        compraProduto
+                = tableData.getSelectionModel()
+                        .getSelectedItem();
+        setCompraProd();
+    }
+
+    private void setCompraProd() {
+        if (compraProduto.getId() != null) {
+            textId.setText(compraProduto.getId().toString());
+        }
+        dtCompra.setValue(compraProduto.getDate());
+        comboProduto.setValue(compraProduto.getProduto());
+        textQuantidade.setText(String.valueOf(compraProduto.getQuantidade()));
+        textValor.setText(String.valueOf(compraProduto.getValor()));
+
+    }
+
     private void loadData() {
-        list.clear();
-        list.addAll(compraProdutoDao.getAll());
+        if (this.compraProdutos != null) {
+            list.clear();
+            list.addAll(compraProdutos);
 
-        tableData.setItems(list);
+            tableData.setItems(list);
+        }
     }
 
-        @FXML
-    private void edit(ActionEvent event) {
-        CompraProduto compraProduto = 
-                tableData.getSelectionModel()
-                    .getSelectedItem();
-    }
-    
     @FXML
     private void save() {
-        CompraProduto compraProduto = new CompraProduto(); 
+
         compraProduto.setDate(dtCompra.getValue());
         compraProduto.setProduto(comboProduto.getSelectionModel().getSelectedItem());
         compraProduto.setQuantidade(Integer.parseInt(textQuantidade.getText()));
         compraProduto.setValor(Double.parseDouble(textValor.getText()));
-        this.compraProdutos.add(compraProduto);   
-    }
-    
 
+
+        if (compraProduto.getId() == null) {
+            this.compraProdutos.add(compraProduto);
+        }
+        compraProduto = new CompraProduto();
+        loadData();
+
+    }
 
 }

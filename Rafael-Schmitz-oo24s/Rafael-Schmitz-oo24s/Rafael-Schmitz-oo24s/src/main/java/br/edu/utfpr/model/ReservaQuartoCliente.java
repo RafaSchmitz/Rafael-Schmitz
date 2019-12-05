@@ -11,6 +11,7 @@ import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -53,7 +54,8 @@ public class ReservaQuartoCliente implements AbstractModel{
     @Column(name = "VlrDiaria", nullable = false)
     private Double vlrDiaria;
     
-    @OneToMany(mappedBy = "reservaQuartoCliente", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "reservaQuartoCliente", cascade = CascadeType.ALL,
+            fetch = FetchType.EAGER)
     private List<CompraProduto> compraProdutos;
     
     @OneToMany(mappedBy = "reservaQuartoCliente", cascade = CascadeType.ALL)

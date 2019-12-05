@@ -12,10 +12,12 @@ import br.edu.utfpr.model.CompraServico;
 import br.edu.utfpr.model.Servico;
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
@@ -24,6 +26,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javax.swing.JOptionPane;
 
 /**
  * FXML Controller class
@@ -32,7 +35,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
  */
 public class FXMLReservaServController implements Initializable {
 
-        @FXML
+    @FXML
     private TableView<CompraServico> tableData;
     @FXML
     private TableColumn<CompraServico, Long> columnId;
@@ -61,30 +64,48 @@ public class FXMLReservaServController implements Initializable {
             = FXCollections.observableArrayList();
 
     private CompraServicoDao compraServicoDao;
+    private CompraServico compraServico;
     private ServicoDao servicoDao;
     private ReservaQuartoClienteDao reservaQuartoClienteDao;
-    
-    
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         this.compraServicoDao = new CompraServicoDao();
 
         this.servicoDao = new ServicoDao();
+        this.compraServicos = new ArrayList<>();
         ObservableList<Servico> produtos
                 = FXCollections.observableArrayList(
                         servicoDao.getAll()
                 );
         this.comboServico.setItems(produtos);
-        
+
         setColumnProperties();
         loadData();
-    }   
-    
-      public void setCompraServicos(List<CompraServico> compraServicos){
-        this.compraServicos = compraServicos;
     }
-    
-     private void setColumnProperties() {
+
+    @FXML
+    private void setValorServico(ActionEvent event) {
+
+        if (comboServico.getItems().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Selecione um Servico!");
+        }
+        Double valorTotal = this.comboServico.getSelectionModel().
+                getSelectedItem().getValor() * Double.parseDouble(textQuantidade.getText());
+        textValor.setText(valorTotal.toString());
+
+    }
+
+    public void setCompraServicos(List<CompraServico> compraServicos) {
+        if (compraServicos == null) {
+            this.compraServicos = new ArrayList<>();
+        } else {
+            this.compraServicos = compraServicos;
+        }
+        loadData();
+    }
+
+    private void setColumnProperties() {
         columnId.setCellValueFactory(
                 new PropertyValueFactory<>("id")
         );
@@ -103,21 +124,48 @@ public class FXMLReservaServController implements Initializable {
 
     }
 
-    private void loadData() {
-        list.clear();
-        list.addAll(compraServicoDao.getAll());
+    @FXML
+    private void edit() {
+        compraServico
+                = tableData.getSelectionModel()
+                        .getSelectedItem();
+        setCompraServ();
+    }
 
-        tableData.setItems(list);
+    private void setCompraServ() {
+        if (compraServico.getId() != null) {
+            textId.setText(compraServico.getId().toString());
+        }
+        dtCompra.setValue(compraServico.getDate());
+        comboServico.setValue(compraServico.getServico());
+        textQuantidade.setText(String.valueOf(compraServico.getQuantidade()));
+        textValor.setText(String.valueOf(compraServico.getValor()));
+
+    }
+
+    private void loadData() {
+        if (this.compraServicos != null) {
+            list.clear();
+            list.addAll(compraServicos);
+
+            tableData.setItems(list);
+        }
     }
 
     @FXML
     private void save() {
-        CompraServico compraServico = new CompraServico(); 
+
         compraServico.setDate(dtCompra.getValue());
         compraServico.setServico(comboServico.getSelectionModel().getSelectedItem());
         compraServico.setQuantidade(Integer.parseInt(textQuantidade.getText()));
         compraServico.setValor(Double.parseDouble(textValor.getText()));
-        this.compraServicos.add(compraServico);   
+        
+        if(compraServico.getId() == null){
+             this.compraServicos.add(compraServico);
+        }
+        this.compraServico = new CompraServico();
+ 
+        loadData();
     }
-    
+
 }
