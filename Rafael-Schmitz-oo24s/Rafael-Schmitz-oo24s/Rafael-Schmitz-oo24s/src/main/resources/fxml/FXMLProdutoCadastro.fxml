@@ -7,7 +7,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="325.0" prefWidth="275.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.utfpr.controller.FXMLProdutoCadastroController">
+<AnchorPane id="AnchorPane" prefHeight="325.0" prefWidth="275.0" styleClass="mainFxmlClass" stylesheets="@../styles/bootstrap.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.utfpr.controller.FXMLProdutoCadastroController">
    <children>
       <Label layoutX="19.0" layoutY="14.0" text="Código" />
       <Label layoutX="17.0" layoutY="62.0" text="Nome" />

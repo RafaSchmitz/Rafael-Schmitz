@@ -8,14 +8,19 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.utfpr.controller.FXMLTLPrincipalController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="700.0" stylesheets="@../styles/bootstrap.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.utfpr.controller.FXMLTLPrincipalController">
    <children>
       <HBox prefHeight="26.0" prefWidth="600.0">
          <children>
-            <MenuBar>
+            <MenuBar prefHeight="25.0" prefWidth="775.0">
                <menus>
                   <Menu mnemonicParsing="false" text="Cadastros">
                      <items>
+                        <Menu mnemonicParsing="false" text="Usuários...">
+                          <items>
+                            <MenuItem mnemonicParsing="false" onAction="#loadUsuario" text="Usuários" />
+                          </items>
+                        </Menu>
                         <Menu mnemonicParsing="false" text="Produtos e Serviços...">
                           <items>
                               <MenuItem mnemonicParsing="false" onAction="#loadProduto" text="Produtos" />
@@ -33,17 +38,17 @@
                               <MenuItem mnemonicParsing="false" onAction="#loadQuarto" text="Quartos" />
                           </items>
                         </Menu>
+                        <MenuItem mnemonicParsing="false" onAction="#loadPrincipal" text="Voltar" />
                      </items>
                   </Menu>
                   <Menu mnemonicParsing="false" text="Relatórios">
                      <items>
-                        <MenuItem mnemonicParsing="false" text="Produto" />
+                        <MenuItem mnemonicParsing="false" onAction="#showReportClientes" text="Clientes" />
                      </items>
                   </Menu>
                   <Menu mnemonicParsing="false" text="Gráficos">
                      <items>
-                        <MenuItem mnemonicParsing="false" text="Produtos por categoria" />
-                        <MenuItem mnemonicParsing="false" text="Vendas por categoria/mês" />
+                        <MenuItem mnemonicParsing="false" text="Reservas" />
                      </items>
                   </Menu>
                </menus>

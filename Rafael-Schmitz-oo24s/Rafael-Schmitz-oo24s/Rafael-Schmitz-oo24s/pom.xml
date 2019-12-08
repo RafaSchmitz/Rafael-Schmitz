@@ -101,7 +101,7 @@
                 <artifactId>javafx-maven-plugin</artifactId>
                 <version>0.0.1</version>
                 <configuration>
-                    <mainClass>br.edu.utfpr.main.MainApp</mainClass>
+                    <mainClass>br.edu.utfpr.main.MainSplash</mainClass>
                 </configuration>
             </plugin>
         </plugins>

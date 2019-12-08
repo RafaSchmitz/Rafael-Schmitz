@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="CENTER" prefHeight="379.0" prefWidth="486.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.utfpr.controller.FXMLReservaServController">
+<VBox alignment="CENTER" prefHeight="379.0" prefWidth="486.0" stylesheets="@../styles/bootstrap.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.utfpr.controller.FXMLReservaServController">
    <children>
       <AnchorPane prefHeight="161.0" prefWidth="486.0">
          <children>
@@ -30,7 +30,7 @@
       </AnchorPane>
       <HBox alignment="CENTER_LEFT" prefHeight="42.0" prefWidth="486.0" VBox.vgrow="NEVER">
          <children>
-            <Button mnemonicParsing="false" onAction="#save" text="Add">
+            <Button mnemonicParsing="false" onAction="#save" text="Adicionar">
                <HBox.margin>
                   <Insets left="20.0" right="10.0" />
                </HBox.margin>
@@ -40,7 +40,6 @@
                   <Insets right="10.0" />
                </HBox.margin>
             </Button>
-            <Button mnemonicParsing="false" text="Remover" />
          </children>
       </HBox>
       <TableView fx:id="tableData" prefHeight="152.0" prefWidth="486.0" tableMenuButtonVisible="true" VBox.vgrow="ALWAYS">

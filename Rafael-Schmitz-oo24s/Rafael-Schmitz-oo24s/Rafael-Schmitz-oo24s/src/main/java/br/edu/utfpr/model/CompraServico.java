@@ -11,6 +11,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class CompraServico implements AbstractModel<Serializable>{
@@ -19,12 +22,16 @@ public class CompraServico implements AbstractModel<Serializable>{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull(message = "O campo quantidade deve ser preenchido.")
     @Column(nullable = false)
     private Integer quantidade;
 
+    @DecimalMin(value = "0.01", 
+            message = "O valor deve ser maior que R$ 0.00.")
     @Column(nullable = false)
     private Double valor;
     
+    @NotNull(message = "O campo data da compra deve ser selecionado.")
     @Column(nullable = false)
     private LocalDate date;
     

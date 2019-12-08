@@ -6,7 +6,8 @@
 package br.edu.utfpr.dao;
 
 import br.edu.utfpr.model.Quarto;
-import java.io.Serializable;
+import java.util.List;
+import javax.persistence.Query;
 
 /**
  *
@@ -17,5 +18,5 @@ public class QuartoDao extends GenericDao<Quarto, Integer>{
     public QuartoDao() {
         super(Quarto.class);
     }
-  
+    
 }

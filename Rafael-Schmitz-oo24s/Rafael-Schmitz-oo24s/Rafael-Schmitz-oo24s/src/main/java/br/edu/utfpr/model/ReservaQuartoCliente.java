@@ -19,6 +19,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.NotNull;
 
 /**
  *
@@ -31,26 +33,35 @@ public class ReservaQuartoCliente implements AbstractModel{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
+    @NotNull(message = "O campo cliente deve ser selecionado.")
     @OneToOne
     @JoinColumn(name = "cliente_id", referencedColumnName = "id")
     private Cliente cliente;
 
+    @NotNull(message = "O campo quarto deve ser selecionado.")
     @OneToOne
     @JoinColumn(name = "quarto_id", referencedColumnName = "id")
     private Quarto quarto;
     
+    @NotNull(message = "O campo Data da reserva deve ser selecionado.")
     @Column(name = "DtReserva", nullable = false)
     private LocalDate dtReserva;
     
-    @Column(name = "Motivo", nullable = false)
+    @Column(name = "Motivo", nullable = true)
     private String motivo;
+    
+    @Column(name = "hospedes", nullable = true)
+    private Integer hospedes;
 
+    @NotNull(message = "O campo CheckIn de camas deve ser selecionado.")
     @Column(name = "CheckIn", nullable = true)
     private LocalDate dtIni;
 
     @Column(name = "CheckOut", nullable = true)
     private LocalDate dtFim;
 
+    @DecimalMin(value = "0.01", 
+            message = "O valor deve ser maior que R$ 0.00.")
     @Column(name = "VlrDiaria", nullable = false)
     private Double vlrDiaria;
     
@@ -60,11 +71,30 @@ public class ReservaQuartoCliente implements AbstractModel{
     
     @OneToMany(mappedBy = "reservaQuartoCliente", cascade = CascadeType.ALL)
     private List<CompraServico> compraServicos;
+    
+    @OneToMany(mappedBy = "reservaQuartoCliente", cascade = CascadeType.ALL)
+    private List<Usuario> usuario;
         
 
     public ReservaQuartoCliente() {
     }
 
+    public List<Usuario> getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(List<Usuario> usuario) {
+        this.usuario = usuario;
+    }
+
+    public Integer getHospedes() {
+        return hospedes;
+    }
+
+    public void setHospedes(Integer hospedes) {
+        this.hospedes = hospedes;
+    }
+    
     public Long getId() {
         return id;
     }

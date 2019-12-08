@@ -6,7 +6,6 @@
 package br.edu.utfpr.model;
 
 import java.io.Serializable;
-import java.util.List;
 import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -17,8 +16,9 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 /**
  *
@@ -31,16 +31,20 @@ public class Quarto implements AbstractModel<Serializable>{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @NotNull(message = "O campo numero deve ser preenchido.")
     @Column(name = "numQuarto", nullable = false)
     private Integer numQuarto;
-
+    
+    @NotNull(message = "O campo tipo do quarto deve ser selecionado.")
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private TipoQuarto tipoQuarto;
 
+    @NotNull(message = "O campo quantidade de camas deve ser preenchido.")
     @Column(name = "qtdCamas", nullable = false)
     private Integer qtdCamas;
 
+    @NotNull(message = "O campo quantidade de pessoas deve ser preenchido.")
     @Column(name = "qtdPessoas", nullable = false)
     private Integer qtdPessoas;
 

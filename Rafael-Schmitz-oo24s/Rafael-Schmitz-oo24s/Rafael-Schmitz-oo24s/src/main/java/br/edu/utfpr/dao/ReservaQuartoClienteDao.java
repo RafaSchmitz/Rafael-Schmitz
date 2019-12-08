@@ -6,7 +6,8 @@
 package br.edu.utfpr.dao;
 
 import br.edu.utfpr.model.ReservaQuartoCliente;
-import java.io.Serializable;
+import java.util.List;
+import javax.persistence.Query;
 
 /**
  *
@@ -17,4 +18,5 @@ public class ReservaQuartoClienteDao extends GenericDao<ReservaQuartoCliente, Lo
     public ReservaQuartoClienteDao() {
         super(ReservaQuartoCliente.class);
     }  
+    
 }

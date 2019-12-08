@@ -5,6 +5,7 @@
  */
 package br.edu.utfpr.controller;
 
+import br.edu.ufpr.db.DatabaseConnection;
 import br.edu.utfpr.dao.ClienteDao;
 import br.edu.utfpr.dao.QuartoDao;
 import br.edu.utfpr.dao.ReservaQuartoClienteDao;
@@ -13,10 +14,13 @@ import br.edu.utfpr.model.CompraProduto;
 import br.edu.utfpr.model.CompraServico;
 import br.edu.utfpr.model.Quarto;
 import br.edu.utfpr.model.ReservaQuartoCliente;
+import br.edu.utfpr.report.GenerateReport;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.animation.FadeTransition;
 import javafx.collections.FXCollections;
@@ -26,6 +30,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
@@ -33,6 +38,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import javax.swing.JOptionPane;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  * FXML Controller class
@@ -55,6 +62,8 @@ public class FXMLReservaCadastroController implements Initializable {
     private DatePicker dtCheckOut;
     @FXML
     private TextField txtDiaria;
+    @FXML
+    private TextField txtHospedes;
     @FXML
     private TextArea taMotivo;
     @FXML
@@ -84,9 +93,6 @@ public class FXMLReservaCadastroController implements Initializable {
                         quartoDao.getAll()
                 );
         this.comboQuarto.setItems(quartos);
-
-        // compraProdutos = new ArrayList<>();
-//         compraServicos = new ArrayList<>();
     }
 
     public void setDialogStage(Stage stage) {
@@ -132,7 +138,7 @@ public class FXMLReservaCadastroController implements Initializable {
         ft.setCycleCount(1);
         ft.setAutoReverse(false);
         FXMLReservaServController reservaServController = loader.getController();
-        
+
         reservaServController.setCompraServicos(compraServicos);
 
         ft.play();
@@ -155,6 +161,18 @@ public class FXMLReservaCadastroController implements Initializable {
         ));
     }
 
+    @FXML
+    private void setHospedes(ActionEvent event) {
+
+        if (comboQuarto.getItems().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Selecione um Quarto!");
+        }
+        Integer hospedes = this.comboQuarto.getSelectionModel().
+                getSelectedItem().getQtdPessoas();
+        txtHospedes.setText(hospedes.toString());
+
+    }
+
     public void setReserva(ReservaQuartoCliente reservaQuartoCliente) {
         this.reservaQuartoCliente = reservaQuartoCliente;
         if (reservaQuartoCliente.getId() != null) {
@@ -165,6 +183,7 @@ public class FXMLReservaCadastroController implements Initializable {
             dtCheckIn.setValue(reservaQuartoCliente.getDtIni());
             dtCheckOut.setValue(reservaQuartoCliente.getDtFim());
             txtDiaria.setText(String.valueOf(reservaQuartoCliente.getVlrDiaria()));
+            txtHospedes.setText(reservaQuartoCliente.getHospedes().toString());
             taMotivo.setText(reservaQuartoCliente.getMotivo());
             compraProdutos = reservaQuartoCliente.getCompraProdutos();
             compraServicos = reservaQuartoCliente.getCompraServicos();
@@ -178,9 +197,11 @@ public class FXMLReservaCadastroController implements Initializable {
 
     @FXML
     private void save() {
-        compraProdutos.forEach(cp -> cp.setReservaQuartoCliente(reservaQuartoCliente));
 
-        compraServicos.forEach(cs -> cs.setReservaQuartoCliente(reservaQuartoCliente));
+        if (reservaQuartoCliente.getId() != null) {
+            compraProdutos.forEach(cp -> cp.setReservaQuartoCliente(reservaQuartoCliente));
+            compraServicos.forEach(cs -> cs.setReservaQuartoCliente(reservaQuartoCliente));
+        }
 
         reservaQuartoCliente.setCompraProdutos(compraProdutos);
 
@@ -195,6 +216,7 @@ public class FXMLReservaCadastroController implements Initializable {
         reservaQuartoCliente.setDtFim(dtCheckOut.getValue());
         reservaQuartoCliente.setVlrDiaria(Double.parseDouble(txtDiaria.getText()));
         reservaQuartoCliente.setMotivo(taMotivo.getText());
+        reservaQuartoCliente.setHospedes(Integer.parseInt(txtHospedes.getText()));
 
         this.reservaQuartoClienteDao.save(reservaQuartoCliente);
         this.stage.close();

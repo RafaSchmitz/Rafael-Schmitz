@@ -6,7 +6,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="575.0" prefWidth="583.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.utfpr.controller.FXMLClienteCadastroController">
+<AnchorPane id="AnchorPane" prefHeight="575.0" prefWidth="583.0" styleClass="mainFxmlClass" stylesheets="@../styles/bootstrap.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.utfpr.controller.FXMLClienteCadastroController">
    <children>
       <Label layoutX="1.0" layoutY="6.0" text="Código:" />
       <TextField fx:id="textId" disable="true" editable="false" layoutX="13.0" layoutY="31.0" prefHeight="25.0" prefWidth="62.0" />

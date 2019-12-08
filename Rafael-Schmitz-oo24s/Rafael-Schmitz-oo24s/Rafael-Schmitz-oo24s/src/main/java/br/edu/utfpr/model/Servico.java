@@ -13,7 +13,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import jdk.jfr.Enabled;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 /**
  *
@@ -26,15 +28,19 @@ public class Servico implements AbstractModel{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
+    @NotEmpty(message = "O campo nome deve ser preenchido.")
     @Column(name = "nome", length = 50, nullable = false)
     private String nome;
     
     @Column(name = "descricao", length = 500, nullable = false)
     private String descricao;
     
+    @DecimalMin(value = "0.01", 
+            message = "O valor deve ser maior que R$ 0.00.")
     @Column(name = "valor")
     private Double valor; 
     
+    @NotNull(message = "O campo 'categoria' deve ser selecionado.")
     @ManyToOne()
     @JoinColumn(name="categoria_id", referencedColumnName = "id")
     private Categoria categoria;

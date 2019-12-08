@@ -5,17 +5,27 @@
  */
 package br.edu.utfpr.controller;
 
+import br.edu.ufpr.db.DatabaseConnection;
+import br.edu.utfpr.model.Usuario;
+import br.edu.utfpr.report.GenerateReport;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.animation.FadeTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  * FXML Controller class
@@ -26,14 +36,29 @@ public class FXMLTLPrincipalController implements Initializable {
 
     /**
      * Initializes the controller class.
+     * 
+     * 
      */
     
-    @FXML
+        @FXML
     private VBox boxPrincipal;
+
+    private Usuario usuarioAutenticado;
+
+    public void setUsuarioAutenticado(Usuario usuario) {
+        this.usuarioAutenticado = usuario;
+    }
+    
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+            try {
+                // TODO
+                setDataPane(openVBox("/fxml/FXMLLogo.fxml"));
+            } catch (IOException ex) {
+                Logger.getLogger(FXMLTLPrincipalController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+ 
     }    
     
     public void setDataPane(Node node) {
@@ -60,12 +85,19 @@ public class FXMLTLPrincipalController implements Initializable {
     }
     
     @FXML
+    public void loadPrincipal(ActionEvent event)
+            throws IOException {
+        setDataPane(openVBox("/fxml/FXMLLogo.fxml"));
+    }
+    
+    @FXML
     public void loadProduto(ActionEvent event)
             throws IOException {
         setDataPane(openVBox(
                 "/fxml/FXMLProdutoLista.fxml"
         ));
     }
+    
     
     @FXML
     public void loadServico(ActionEvent event)
@@ -74,6 +106,15 @@ public class FXMLTLPrincipalController implements Initializable {
                 "/fxml/FXMLServicoLista.fxml"
         ));
     }
+    
+    @FXML
+    public void loadUsuario(ActionEvent event)
+            throws IOException {
+        setDataPane(openVBox(
+                "/fxml/FXMLUsuarioLista.fxml"
+        ));
+    }
+    
     @FXML
     public void loadCliente(ActionEvent event)
             throws IOException {
@@ -95,5 +136,30 @@ public class FXMLTLPrincipalController implements Initializable {
         setDataPane(openVBox(
                 "/fxml/FXMLReservaLista.fxml"
         ));
+    }
+    
+
+    @FXML
+    private void showReportClientes(ActionEvent event) {
+        GenerateReport generateReport = new GenerateReport();
+        InputStream file = this.getClass().getResourceAsStream("/report/Clientes.Jasper");
+
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("TITULO", "Relatório de Clientes");
+        
+
+        DatabaseConnection conn = DatabaseConnection.getInstance();
+        try {
+            JasperViewer viewer = generateReport.getReport(
+                    conn.getConnection(), parameters, file);
+            viewer.setVisible(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erro");
+            alert.setHeaderText("Falha ao exibir relatório!");
+            alert.setContentText("Falha ao exibir relatório!");
+            alert.showAndWait();
+        }
     }
 }

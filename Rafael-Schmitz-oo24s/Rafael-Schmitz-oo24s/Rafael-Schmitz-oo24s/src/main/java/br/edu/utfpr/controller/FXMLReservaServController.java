@@ -70,16 +70,15 @@ public class FXMLReservaServController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        //        this.compraServicos = new ArrayList<>();
         this.compraServicoDao = new CompraServicoDao();
-
         this.servicoDao = new ServicoDao();
-        this.compraServicos = new ArrayList<>();
-        ObservableList<Servico> produtos
+        ObservableList<Servico> servico
                 = FXCollections.observableArrayList(
                         servicoDao.getAll()
                 );
-        this.comboServico.setItems(produtos);
-
+        this.comboServico.setItems(servico);
+        compraServico = new CompraServico();
         setColumnProperties();
         loadData();
     }
@@ -95,7 +94,7 @@ public class FXMLReservaServController implements Initializable {
         textValor.setText(valorTotal.toString());
 
     }
-
+    
     public void setCompraServicos(List<CompraServico> compraServicos) {
         if (compraServicos == null) {
             this.compraServicos = new ArrayList<>();
@@ -163,7 +162,7 @@ public class FXMLReservaServController implements Initializable {
         if(compraServico.getId() == null){
              this.compraServicos.add(compraServico);
         }
-        this.compraServico = new CompraServico();
+        compraServico = new CompraServico();
  
         loadData();
     }

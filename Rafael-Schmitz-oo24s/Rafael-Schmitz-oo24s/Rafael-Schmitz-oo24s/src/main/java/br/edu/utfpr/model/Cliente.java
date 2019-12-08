@@ -5,8 +5,6 @@
  */
 package br.edu.utfpr.model;
 
-import java.time.LocalDate;
-import java.util.List;
 import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -17,8 +15,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 /**
  *
@@ -31,34 +30,44 @@ public class Cliente implements AbstractModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @NotEmpty(message = "O campo nome deve ser preenchido.")
     @Column(name = "nome", length = 244, nullable = false)
     private String nome;
 
+    @NotEmpty(message = "O campo cpf deve ser preenchido.")
     @Column(name = "cpf", length = 11, nullable = false)
     private String cpf;
 
+    @NotEmpty(message = "O campo rg deve ser preenchido.")
     @Column(name = "rg", length = 9, nullable = false)
     private String rg;
 
+    @NotEmpty(message = "O campo numero do passaporte deve ser preenchido.")
     @Column(name = "numPassaporte", length = 8, nullable = false)
     private String numPassaporte;
 
+    @NotEmpty(message = "O campo endereço deve ser preenchido.")
     @Column(name = "endereco", length = 254, nullable = false)
     private String endereco;
 
+    @NotEmpty(message = "O campo cep deve ser preenchido.")
     @Column(name = "cep", length = 15, nullable = false)
     private String cep;
     
+    @NotEmpty(message = "O campo bairro deve ser preenchido.")
     @Column(name = "bairro", length = 254, nullable = false)
     private String bairro;
     
+    @NotNull(message = "O campo cidade deve ser selecionado.")
     @ManyToOne
     @JoinColumn(name = "cidade_id", referencedColumnName = "id")
     private Cidade cidade;
 
+    @NotEmpty(message = "O campo telefone deve ser preenchido.")
     @Column(name = "telefone", length = 254, nullable = false)
     private String telefone;
 
+    @NotEmpty(message = "O campo email deve ser preenchido.")
     @Column(name = "email", length = 254, nullable = false)
     private String email;
 
