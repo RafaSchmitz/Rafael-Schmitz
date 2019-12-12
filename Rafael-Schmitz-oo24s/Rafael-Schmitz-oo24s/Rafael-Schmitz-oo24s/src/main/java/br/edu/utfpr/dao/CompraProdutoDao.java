@@ -6,7 +6,7 @@
 package br.edu.utfpr.dao;
 
 import br.edu.utfpr.model.CompraProduto;
-import java.io.Serializable;
+import javax.persistence.Query;
 
 /**
  *
@@ -18,4 +18,13 @@ public class CompraProdutoDao extends GenericDao<CompraProduto, Long>{
         super(CompraProduto.class);
     }
     
+        public double sumValProd(Long id){
+        Query query = em.createQuery("SELECT sum(valor) "
+                + "FROM CompraProduto "
+                + "WHERE reservaquartocliente_id = :id");
+        query.setParameter("id", id);
+        
+        return ((Number)query.getSingleResult()).doubleValue();
+        
+    }
 }

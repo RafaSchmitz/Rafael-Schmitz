@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.10.0.final using JasperReports Library version 6.10.0-unknown  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Blank_A4_1" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f233a2b9-8f3c-4922-bfb0-002f929b5576">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter (2)"/>
+	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w1" value="743"/>
+	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w2" value="243"/>
+	<parameter name="TITULO" class="java.lang.String"/>
+	<parameter name="Nome" class="java.lang.String"/>
+	<parameter name="RESERVA_ID" class="java.lang.Long"/>
+	<parameter name="PATH_SUB_PRODUTO" class="java.lang.String"/>
+	<parameter name="PATH_SUB_SERVICO" class="java.lang.String"/>
+	<parameter name="DIARIAS" class="java.lang.Long"/>
+	<parameter name="VALTOT" class="java.lang.Double"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT 
+	cliente.nome as cliente,
+	reservaquartocliente.checkout
+FROM 
+	reservaquartocliente
+	INNER JOIN cliente ON 
+	 	reservaquartocliente.cliente_id = cliente.id
+where reservaquartocliente.id =  $P{RESERVA_ID} 
+	]]>
+	</queryString>
+	<field name="cliente" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="cliente"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="cliente"/>
+	</field>
+	<field name="checkout" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="checkout"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="reservaquartocliente"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<textField>
+				<reportElement x="90" y="0" width="360" height="61" uuid="dd534b0d-8d44-4407-9416-4f3ccd28cfca"/>
+				<textElement textAlignment="Center">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{TITULO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="51" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="50" splitType="Stretch">
+			<textField>
+				<reportElement x="90" y="10" width="100" height="20" uuid="024d3cce-da82-4388-a098-f42eb8debec8"/>
+				<textFieldExpression><![CDATA[$F{cliente}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="10" width="100" height="14" uuid="efa7c946-07ea-48ec-b2d3-b6d60dddfa4f"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cliente:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="-20" y="24" width="595" height="1" uuid="04baf02d-d8b3-4d45-9ac4-1e495b7cbce5"/>
+			</line>
+			<textField>
+				<reportElement x="450" y="14" width="70" height="16" uuid="15ada983-51f9-4691-83ce-bf9a83538cc3"/>
+				<textFieldExpression><![CDATA[$F{checkout}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="370" y="12" width="100" height="30" uuid="c5cd8593-304c-4a71-b012-ae790b5e8f30"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[CheckOut:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="290" y="10" width="100" height="14" uuid="2e3b42a2-7d4d-432c-9705-fc2ab07ec7dc"/>
+				<textFieldExpression><![CDATA[$P{DIARIAS}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="230" y="10" width="63" height="13" uuid="5508818f-8b55-493e-bb4a-6633ea38f1cf"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Diárias:]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="130" splitType="Stretch">
+			<subreport>
+				<reportElement x="-20" y="0" width="580" height="30" uuid="49086357-617c-44d2-a8a7-ec1755396e81"/>
+				<subreportParameter name="RESERVA_ID">
+					<subreportParameterExpression><![CDATA[$P{RESERVA_ID}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{PATH_SUB_PRODUTO}]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement x="-20" y="100" width="580" height="30" uuid="1202d0cc-22ab-47b4-ab63-aed7364e0738"/>
+				<subreportParameter name="RESERVA_ID">
+					<subreportParameterExpression><![CDATA[$P{RESERVA_ID}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{PATH_SUB_SERVICO}]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="83" splitType="Stretch">
+			<line>
+				<reportElement x="-20" y="60" width="595" height="1" uuid="dd02ff77-0a74-47d9-8ed4-8ec4dcea103e"/>
+			</line>
+			<staticText>
+				<reportElement x="-10" y="40" width="100" height="30" uuid="238d8d4f-4da5-4f83-8a1c-86fb3c5d8021"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="500" y="45" width="100" height="30" uuid="21524a5b-331d-437e-9f7c-bf93d80c48a7"/>
+				<textFieldExpression><![CDATA[$P{VALTOT}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="470" y="45" width="30" height="16" uuid="bb07acde-2d0d-4e77-9aff-33d86be48ba1"/>
+				<text><![CDATA[R$]]></text>
+			</staticText>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<textField pattern="dd/MM/yyy  hh:mm:ss">
+				<reportElement x="420" y="0" width="155" height="30" uuid="9d9fbd8c-4e2d-4e57-83aa-1e86f9995ef7"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

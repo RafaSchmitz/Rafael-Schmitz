@@ -146,7 +146,6 @@ public class FXMLTLPrincipalController implements Initializable {
 
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("TITULO", "Relatório de Clientes");
-        
 
         DatabaseConnection conn = DatabaseConnection.getInstance();
         try {

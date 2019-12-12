@@ -6,7 +6,7 @@
 package br.edu.utfpr.dao;
 
 import br.edu.utfpr.model.ReservaQuartoCliente;
-import java.util.List;
+import java.time.LocalDate;
 import javax.persistence.Query;
 
 /**
@@ -19,4 +19,17 @@ public class ReservaQuartoClienteDao extends GenericDao<ReservaQuartoCliente, Lo
         super(ReservaQuartoCliente.class);
     }  
     
+    public int verfDt(LocalDate dtIni, LocalDate dtFim, Integer id) {
+        
+        Query query = em.createQuery("SELECT ReservaQuartoCliente.quarto_id "
+                + "FROM ReservaQuartoCliente "
+                + "WHERE dtreserva BETWEEN :dtIni and :dtFim"
+                + " and ReservaQuartoCliente.quarto_id = :id");
+        
+        query.setParameter("id", id);
+        query.setParameter("dtIni", dtIni);
+        query.setParameter("dtFim", dtFim);
+
+        return ((Number)query.getSingleResult()).intValue();
+    }
 }

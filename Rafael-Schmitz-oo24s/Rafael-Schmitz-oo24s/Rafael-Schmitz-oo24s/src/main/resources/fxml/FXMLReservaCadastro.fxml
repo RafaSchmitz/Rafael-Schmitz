@@ -37,7 +37,7 @@
       <TextArea fx:id="taMotivo" layoutX="288.0" layoutY="33.0" prefHeight="55.0" prefWidth="467.0" />
       <Label layoutX="25.0" layoutY="381.0" text="Número de Hóspedes" />
       <TextField fx:id="txtHospedes" layoutX="25.0" layoutY="398.0" />
-      <Button layoutX="13.0" layoutY="478.0" mnemonicParsing="false" text="Fechar reserva" />
+      <Button layoutX="13.0" layoutY="478.0" mnemonicParsing="false" onAction="#showReportCheckOut" text="Fechar reserva" />
       <Button layoutX="389.0" layoutY="101.0" mnemonicParsing="false" onAction="#loadVendaProd" text="Adicionar Produto" />
       <Button layoutX="541.0" layoutY="101.0" mnemonicParsing="false" onAction="#loadVendaServ" text="Adicionar Serviço" />
    </children>

@@ -7,6 +7,8 @@ package br.edu.utfpr.controller;
 
 import br.edu.ufpr.db.DatabaseConnection;
 import br.edu.utfpr.dao.ClienteDao;
+import br.edu.utfpr.dao.CompraProdutoDao;
+import br.edu.utfpr.dao.CompraServicoDao;
 import br.edu.utfpr.dao.QuartoDao;
 import br.edu.utfpr.dao.ReservaQuartoClienteDao;
 import br.edu.utfpr.model.Cliente;
@@ -18,6 +20,8 @@ import br.edu.utfpr.report.GenerateReport;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -74,6 +78,8 @@ public class FXMLReservaCadastroController implements Initializable {
     private QuartoDao quartoDao;
     private Stage stage;
     private ReservaQuartoCliente reservaQuartoCliente;
+    private CompraProdutoDao compraProdutoDao = new CompraProdutoDao();
+    private CompraServicoDao compraServicoDao = new CompraServicoDao();
     private List<CompraProduto> compraProdutos;
     private List<CompraServico> compraServicos;
 
@@ -220,6 +226,70 @@ public class FXMLReservaCadastroController implements Initializable {
 
         this.reservaQuartoClienteDao.save(reservaQuartoCliente);
         this.stage.close();
+
+    }
+
+    private long calculaDiff(LocalDate dtIn, LocalDate dtOut) {
+
+        long dif = ChronoUnit.DAYS.between(dtIn, dtOut); //pega a diferença dos dois
+
+        return dif;
+
+    }
+
+    private double calculaDiaria(long d) {
+
+        double val;
+        double valD;
+
+        valD = reservaQuartoCliente.getVlrDiaria();
+
+        val = (double) d * valD;
+
+        return val;
+    }
+
+    @FXML
+    private void showReportCheckOut(ActionEvent event) {
+
+        long dif = calculaDiff(this.reservaQuartoCliente.getDtIni(), this.reservaQuartoCliente.getDtFim());
+        double d = calculaDiaria(dif);
+        double valProdT = compraProdutoDao.sumValProd(reservaQuartoCliente.getId());
+        double valServT = compraServicoDao.sumValServ(reservaQuartoCliente.getId());
+
+        double valTot = valProdT + valServT + d;
+
+        GenerateReport generateReport = new GenerateReport();
+        InputStream file = this.getClass().getResourceAsStream("/report/CheckOut.Jasper");
+
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("TITULO", "Relatório de CheckOut");
+
+        parameters.put("RESERVA_ID", this.reservaQuartoCliente.getId());
+
+        parameters.put("PATH_SUB_PRODUTO",
+                this.getClass().getResource("/report/checkout_produto.jasper").toString());
+
+        parameters.put("PATH_SUB_SERVICO",
+                this.getClass().getResource("/report/checkout_servico.jasper").toString());
+
+        parameters.put("DIARIAS", dif);
+
+        parameters.put("VALTOT", valTot);
+
+        DatabaseConnection conn = DatabaseConnection.getInstance();
+        try {
+            JasperViewer viewer = generateReport.getReport(
+                    conn.getConnection(), parameters, file);
+            viewer.setVisible(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erro");
+            alert.setHeaderText("Falha ao exibir relatório!");
+            alert.setContentText("Falha ao exibir relatório!");
+            alert.showAndWait();
+        }
     }
 
 }

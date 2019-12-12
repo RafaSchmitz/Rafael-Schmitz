@@ -6,17 +6,24 @@
 package br.edu.utfpr.dao;
 
 import br.edu.utfpr.model.CompraServico;
-import br.edu.utfpr.model.Servico;
-import java.io.Serializable;
+import javax.persistence.Query;
 
 /**
  *
  * @author Rafa
  */
-public class CompraServicoDao extends GenericDao<CompraServico, Long>{
+public class CompraServicoDao extends GenericDao<CompraServico, Long> {
 
     public CompraServicoDao() {
         super(CompraServico.class);
     }
-   
+
+    public double sumValServ(Long id) {
+        Query query = em.createQuery("SELECT sum(valor) "
+                + "FROM CompraServico "
+                + "WHERE reservaquartocliente_id = :id");
+        query.setParameter("id", id);
+        
+        return ((Number)query.getSingleResult()).doubleValue();
+    }
 }
