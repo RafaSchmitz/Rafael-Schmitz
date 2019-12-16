@@ -34,7 +34,7 @@ public class Usuario implements AbstractModel, Serializable{
     public static final String FIND_ALL = "Usuario.findAll";
     public static final String FIND_BY_EMAIL_AND_SENHA=
             "Usuario.findByEmailAndSenha";
-
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

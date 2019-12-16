@@ -16,15 +16,12 @@ import br.edu.utfpr.model.CompraProduto;
 import br.edu.utfpr.model.CompraServico;
 import br.edu.utfpr.model.Quarto;
 import br.edu.utfpr.model.ReservaQuartoCliente;
-import br.edu.utfpr.model.Usuario;
 import br.edu.utfpr.report.GenerateReport;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
-import static java.time.temporal.TemporalQueries.localDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -232,8 +229,9 @@ public class FXMLReservaCadastroController implements Initializable {
         LocalDate dtIni = dtCheckIn.getValue();
         LocalDate dtFim = dtCheckOut.getValue();
         Integer id = reservaQuartoCliente.getQuarto().getId();
-
-        if (reservaQuartoClienteDao.verfDt(dtIni, dtFim, id) == id) {
+        
+        
+        if (reservaQuartoClienteDao.verfDt(dtIni, dtFim, id, reservaQuartoCliente.getId() ) == id) {
             JOptionPane.showMessageDialog(null, "Já existe uma reserva para este quarto nesta data!");
 
         } else {

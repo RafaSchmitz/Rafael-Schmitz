@@ -29,7 +29,35 @@ INSERT INTO ESTADO (id ,nome, pais_id) VALUES (26, 'Sao Paulo', 1);
 INSERT INTO ESTADO (id ,nome, pais_id) VALUES (27, 'Tocantins', 1);
 
 INSERT INTO CIDADE (id, nome, estado_id) VALUES (3042, 'Pato Branco', 18);
+INSERT INTO CIDADE (id, nome, estado_id) VALUES (2907, 'Francisco Beltrao', 18);
+INSERT INTO CIDADE (id, nome, estado_id) VALUES (2920, 'Guarapuava', 18);
+INSERT INTO CIDADE (id, nome, estado_id) VALUES (3032, 'Palmas', 18);
 
 INSERT INTO CATEGORIA(id, descricao) VALUES (1, 'Quentes');
 INSERT INTO CATEGORIA(id, descricao) VALUES (2, 'Frios');
 INSERT INTO CATEGORIA(id, descricao) VALUES (3, 'Limpeza');
+INSERT INTO CATEGORIA(id, descricao) VALUES (5, 'Serviços de Quarto');
+INSERT INTO CATEGORIA(id, descricao) VALUES (6, 'Bebidas');
+
+INSERT INTO PRODUTO (descricao, nome, valor, categoria_id)  values('Coca cola - 250 ml', 'Coca cola 250ml', 5.50, 6);
+INSERT INTO PRODUTO (descricao, nome, valor, categoria_id)  values('Sanduiche Natural', 'Sanduiche Natural', 7.00, 2);
+INSERT INTO PRODUTO (descricao, nome, valor, categoria_id)  values('Sorvete de Flocos', 'Sorvete de Flocos', 11.00, 2);
+
+INSERT INTO SERVICO (descricao, nome, valor, categoria_id)  values('Serviços de Limpeza', 'Limpeza', 70, 3);
+INSERT INTO SERVICO (descricao, nome, valor, categoria_id)  values('Camareira', 'Camareira', 40.00, 5);
+
+
+INSERT INTO CLIENTE (bairro, cep, cpf, email,  endereco, nome, numpassaporte, rg, telefone, cidade_id)values('Centro', '85508000','06354909994', 'rafasch@live.com', 'rua tamoio','Rafael Schmitz','00000000', '102788819', '46999838552', 3042);
+
+INSERT INTO CLIENTE (bairro, cep, cpf, email,  endereco, nome, numpassaporte, rg, telefone, cidade_id)values('Centro', '85508000','06354909995', 'teste@live.com', 'rua tamoio','Beijamin Franklin','00000000', '102788819', '46999838552', 2907);
+
+
+
+INSERT INTO QUARTO (numquarto, qtdcamas, qtdpessoas, tipoquarto)values(2, 1, 1, 'ECONOMICO');
+					
+INSERT INTO QUARTO (numquarto, qtdcamas, qtdpessoas, tipoquarto)values(3, 1, 2, 'LUXO');
+	
+INSERT INTO QUARTO (numquarto, qtdcamas, qtdpessoas, tipoquarto)values(4, 2, 4, 'SUPERIOR');
+
+
+INSERT INTO USUARIO(ativo, cpf, datanascimento, email, foto, nome, senha)values('T', '06354809994', '1995-09-06','console@live.com',null ,'Console', '03AC674216F3E15C761EE1A5E255F067953623C8B388B4459E13F978D7C846F4');

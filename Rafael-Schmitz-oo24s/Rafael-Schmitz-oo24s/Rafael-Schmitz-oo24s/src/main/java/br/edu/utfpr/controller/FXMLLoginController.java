@@ -22,6 +22,9 @@ import javafx.stage.Stage;
 
 public class FXMLLoginController implements Initializable {
 
+    //LOGIN: console@live.com
+    //Senha: 1234
+    
     @FXML
     private TextField textUsuario;
     @FXML

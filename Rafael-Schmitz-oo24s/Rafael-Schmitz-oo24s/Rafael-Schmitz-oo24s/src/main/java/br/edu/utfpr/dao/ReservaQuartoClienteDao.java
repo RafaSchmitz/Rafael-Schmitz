@@ -20,15 +20,22 @@ public class ReservaQuartoClienteDao extends GenericDao<ReservaQuartoCliente, Lo
         super(ReservaQuartoCliente.class);
     }
 
-    public int verfDt(LocalDate dtIni, LocalDate dtFim, Integer id) {
+    public int verfDt(LocalDate dtIni, LocalDate dtFim, Integer id, Long idr) {
 
         try {
-            Query query = em.createQuery("SELECT r.quarto.id "
+            String sql = "SELECT r.quarto.id "
                     + "FROM ReservaQuartoCliente r "
-                    + "WHERE r.dtReserva BETWEEN :dtIni and :dtFim"
-                    + " and r.quarto.id = :id");
+                    + "WHERE ((r.dtIni BETWEEN :dtIni and :dtFim) "
+                    + "OR (r.dtFim BETWEEN :dtIni and :dtFim)) "
+                    + " and r.quarto.id = :id"
+                    + (idr == null ? "" : " and r.id <> :idr");
+            
+            Query query = em.createQuery(sql);
 
             query.setParameter("id", id);
+            if (idr != null) {
+                query.setParameter("idr", idr);
+            }
             query.setParameter("dtIni", dtIni);
             query.setParameter("dtFim", dtFim);
 
