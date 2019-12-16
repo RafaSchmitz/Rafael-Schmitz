@@ -16,12 +16,15 @@ import br.edu.utfpr.model.CompraProduto;
 import br.edu.utfpr.model.CompraServico;
 import br.edu.utfpr.model.Quarto;
 import br.edu.utfpr.model.ReservaQuartoCliente;
+import br.edu.utfpr.model.Usuario;
 import br.edu.utfpr.report.GenerateReport;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
+import static java.time.temporal.TemporalQueries.localDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -72,6 +75,7 @@ public class FXMLReservaCadastroController implements Initializable {
     private TextArea taMotivo;
     @FXML
     private VBox boxVendas;
+    
 
     private ReservaQuartoClienteDao reservaQuartoClienteDao;
     private ClienteDao clienteDao;
@@ -82,6 +86,7 @@ public class FXMLReservaCadastroController implements Initializable {
     private CompraServicoDao compraServicoDao = new CompraServicoDao();
     private List<CompraProduto> compraProdutos;
     private List<CompraServico> compraServicos;
+    
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -224,14 +229,23 @@ public class FXMLReservaCadastroController implements Initializable {
         reservaQuartoCliente.setMotivo(taMotivo.getText());
         reservaQuartoCliente.setHospedes(Integer.parseInt(txtHospedes.getText()));
 
-        this.reservaQuartoClienteDao.save(reservaQuartoCliente);
-        this.stage.close();
+        LocalDate dtIni = dtCheckIn.getValue();
+        LocalDate dtFim = dtCheckOut.getValue();
+        Integer id = reservaQuartoCliente.getQuarto().getId();
+
+        if (reservaQuartoClienteDao.verfDt(dtIni, dtFim, id) == id) {
+            JOptionPane.showMessageDialog(null, "Já existe uma reserva para este quarto nesta data!");
+
+        } else {
+            this.reservaQuartoClienteDao.save(reservaQuartoCliente);
+            this.stage.close();
+        }
 
     }
 
     private long calculaDiff(LocalDate dtIn, LocalDate dtOut) {
 
-        long dif = ChronoUnit.DAYS.between(dtIn, dtOut); //pega a diferença dos dois
+        long dif = ChronoUnit.DAYS.between(dtIn, dtOut); //pega a diferença das duas
 
         return dif;
 
@@ -251,44 +265,49 @@ public class FXMLReservaCadastroController implements Initializable {
 
     @FXML
     private void showReportCheckOut(ActionEvent event) {
+        if (reservaQuartoCliente.getId() != null) {
+        
+            long diasDiarias = calculaDiff(this.reservaQuartoCliente.getDtIni(), this.reservaQuartoCliente.getDtFim());
+            double valDiarias = calculaDiaria(diasDiarias);
 
-        long dif = calculaDiff(this.reservaQuartoCliente.getDtIni(), this.reservaQuartoCliente.getDtFim());
-        double d = calculaDiaria(dif);
-        double valProdT = compraProdutoDao.sumValProd(reservaQuartoCliente.getId());
-        double valServT = compraServicoDao.sumValServ(reservaQuartoCliente.getId());
+            double valProdT = compraProdutoDao.sumValProd(reservaQuartoCliente.getId());
+            double valServT = compraServicoDao.sumValServ(reservaQuartoCliente.getId());
 
-        double valTot = valProdT + valServT + d;
+            double valTot = valProdT + valServT + valDiarias;
 
-        GenerateReport generateReport = new GenerateReport();
-        InputStream file = this.getClass().getResourceAsStream("/report/CheckOut.Jasper");
+            GenerateReport generateReport = new GenerateReport();
+            InputStream file = this.getClass().getResourceAsStream("/report/CheckOut.Jasper");
 
-        Map<String, Object> parameters = new HashMap<>();
-        parameters.put("TITULO", "Relatório de CheckOut");
+            Map<String, Object> parameters = new HashMap<>();
+            parameters.put("TITULO", "Relatório de CheckOut");
 
-        parameters.put("RESERVA_ID", this.reservaQuartoCliente.getId());
+            parameters.put("RESERVA_ID", this.reservaQuartoCliente.getId());
 
-        parameters.put("PATH_SUB_PRODUTO",
-                this.getClass().getResource("/report/checkout_produto.jasper").toString());
+            parameters.put("PATH_SUB_PRODUTO",
+                    this.getClass().getResource("/report/checkout_produto.jasper").toString());
 
-        parameters.put("PATH_SUB_SERVICO",
-                this.getClass().getResource("/report/checkout_servico.jasper").toString());
+            parameters.put("PATH_SUB_SERVICO",
+                    this.getClass().getResource("/report/checkout_servico.jasper").toString());
 
-        parameters.put("DIARIAS", dif);
+            parameters.put("DIARIAS", diasDiarias);
 
-        parameters.put("VALTOT", valTot);
+            parameters.put("VALTOT", valTot);
 
-        DatabaseConnection conn = DatabaseConnection.getInstance();
-        try {
-            JasperViewer viewer = generateReport.getReport(
-                    conn.getConnection(), parameters, file);
-            viewer.setVisible(true);
-        } catch (Exception e) {
-            e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Erro");
-            alert.setHeaderText("Falha ao exibir relatório!");
-            alert.setContentText("Falha ao exibir relatório!");
-            alert.showAndWait();
+            DatabaseConnection conn = DatabaseConnection.getInstance();
+            try {
+                JasperViewer viewer = generateReport.getReport(
+                        conn.getConnection(), parameters, file);
+                viewer.setVisible(true);
+            } catch (Exception e) {
+                e.printStackTrace();
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Erro");
+                alert.setHeaderText("Falha ao exibir relatório!");
+                alert.setContentText("Falha ao exibir relatório!");
+                alert.showAndWait();
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Finalize o cadastro da reserva!");
         }
     }
 

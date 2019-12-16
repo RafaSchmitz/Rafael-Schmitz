@@ -8,13 +8,13 @@
 
 .labelMenu {
     -fx-font-size: 11pt;
-    -fx-text-fill: #d8d8d8;
+    -fx-text-fill: #ffffff;
     -fx-opacity: 0.6;
     -fx-font-weight: bold;
 }
 .menu{
-    -fx-background-color: #f2f2f7;
-        -fx-font-size: 11pt;
+    -fx-background-color: #f2f1f1;
+    -fx-font-size: 11pt;
     -fx-text-fill: black;
 
 

@@ -58,7 +58,7 @@ public class FXMLTLPrincipalController implements Initializable {
             } catch (IOException ex) {
                 Logger.getLogger(FXMLTLPrincipalController.class.getName()).log(Level.SEVERE, null, ex);
             }
- 
+           
     }    
     
     public void setDataPane(Node node) {

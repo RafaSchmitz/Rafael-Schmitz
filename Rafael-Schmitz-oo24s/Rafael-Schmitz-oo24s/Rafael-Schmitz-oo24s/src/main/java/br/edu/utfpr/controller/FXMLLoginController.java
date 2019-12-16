@@ -1,6 +1,5 @@
 package br.edu.utfpr.controller;
 
-
 import br.edu.utfpr.dao.UsuarioDao;
 import br.edu.utfpr.model.Usuario;
 import java.io.UnsupportedEncodingException;
@@ -27,12 +26,11 @@ public class FXMLLoginController implements Initializable {
     private TextField textUsuario;
     @FXML
     private TextField textSenha;
-    @FXML 
+    @FXML
     private Button buttonEntrar;
-    
+
     private UsuarioDao usuarioDao;
-    
-    
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         this.usuarioDao = new UsuarioDao();
@@ -43,64 +41,64 @@ public class FXMLLoginController implements Initializable {
             }
         });
         buttonEntrar.setDefaultButton(true);
-    }    
-    
-    private String hashSenha(TextField senha){
-        
-     String senhaHex= "";
-     
-     try{  
-        MessageDigest digest = MessageDigest.getInstance("SHA-256");
-        byte messaDigest[] = digest.digest(senha.getText().getBytes("UTF-8"));
+    }
 
-        StringBuilder sb = new StringBuilder();
+    private String hashSenha(TextField senha) {
 
-        for (byte b : messaDigest) {
-            sb.append(String.format("%02X", 0xFF & b));
+        String senhaHex = "";
 
-        }
-        
-        senhaHex = sb.toString();
-        
-     }  catch (NoSuchAlgorithmException ex) {
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte messaDigest[] = digest.digest(senha.getText().getBytes("UTF-8"));
+
+            StringBuilder sb = new StringBuilder();
+
+            for (byte b : messaDigest) {
+                sb.append(String.format("%02X", 0xFF & b));
+
+            }
+
+            senhaHex = sb.toString();
+
+        } catch (NoSuchAlgorithmException ex) {
             Logger.getLogger(FXMLUsuarioCadastroController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (UnsupportedEncodingException ex) {
             Logger.getLogger(FXMLUsuarioCadastroController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         return senhaHex;
     }
-    
+
     @FXML
     private void login() {
         try {
             Usuario usuario = this.usuarioDao.findByEmailAndSenhaNamedQuery(
                     textUsuario.getText(), hashSenha(textSenha));
             if (usuario != null) {
-                
+
                 FXMLLoader loader = new FXMLLoader();
                 loader.setLocation(
-                    this.getClass()
-                            .getResource("/fxml/FXMLTLPrincipal.fxml"));
+                        this.getClass()
+                                .getResource("/fxml/FXMLTLPrincipal.fxml"));
                 VBox root = (VBox) loader.load();
                 Scene scene = new Scene(root);
                 scene.getStylesheets().add("/styles/bootstrap.css");
-                
+
                 Stage stage = new Stage();
                 stage.setTitle("Controle de Reservas");
                 stage.setScene(scene);
                 stage.setMaximized(true);
                 stage.setResizable(true);
-                
+
                 FXMLTLPrincipalController controller
-                    = loader.getController();
+                        = loader.getController();
                 controller.setUsuarioAutenticado(usuario);
                 
                 stage.show();
-                
+
                 Stage stageLogin = (Stage) buttonEntrar.getScene().getWindow();
                 stageLogin.close();
-                        
+
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -111,5 +109,5 @@ public class FXMLLoginController implements Initializable {
             alert.showAndWait();
         }
     }
-    
+
 }

@@ -7,7 +7,7 @@ package br.edu.utfpr.controller;
 
 import br.edu.utfpr.dao.ReservaQuartoClienteDao;
 import br.edu.utfpr.model.ReservaQuartoCliente;
-import br.edu.utfpr.model.Servico;
+import br.edu.utfpr.model.Usuario;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
@@ -20,7 +20,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -49,7 +48,8 @@ public class FXMLReservaListaController implements Initializable {
     private TableColumn<ReservaQuartoCliente, LocalDate> columnCheckOut;
     @FXML
     private TableColumn<ReservaQuartoCliente, Double> columnDiaria;
-      
+    
+
     private ReservaQuartoClienteDao reservaQuartoClienteDao;
     private ObservableList<ReservaQuartoCliente> list = 
             FXCollections.observableArrayList();
