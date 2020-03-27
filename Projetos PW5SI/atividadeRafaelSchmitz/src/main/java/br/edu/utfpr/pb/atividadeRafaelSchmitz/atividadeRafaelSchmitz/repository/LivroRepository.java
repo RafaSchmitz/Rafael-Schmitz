@@ -12,7 +12,7 @@ public interface LivroRepository extends JpaRepository<Livro, Long>{
 
     List<Livro> findByAno(int ano);
 
-    List<Livro> findByGeneroDescricaoContainsOrderByAno(String descricao);
+    List<Livro> findByGeneroNomeContainsOrderByAno(String nome);
 
     List<Livro> findByIsbnContainsOrNomeContainsOrderByAno(String isbn, String nome);
 

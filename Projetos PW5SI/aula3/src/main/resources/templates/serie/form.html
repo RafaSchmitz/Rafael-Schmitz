@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Cadastro de Série</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://unpkg.com/shards-ui@latest/dist/css/shards.min.css">
+    </head>
+    <body>
+        <div class="container my-5">
+        	<h2>Formulário de Cadastro - Série</h2>
+        	
+        	<div class="row">
+        		<form th:action="@{/serie}" method="post" 
+        			th:object="${serie}">
+        			<div class="row">
+        				<div class="form-group">
+	        				<label for="id">Código</label>
+	        				<input type="text" class="form-control"
+	        				   th:field="*{id}"	readonly/>
+        				</div>
+        			</div>
+        			
+        			<div class="row">
+        				<div class="form-group">
+	        				<label for="nome">Nome</label>
+	        				<input type="text" class="form-control"
+	        					th:field="*{nome}" />
+        					<span th:if="${#fields.hasErrors('nome')}"
+        						th:errors="*{nome}"
+        						class="text-danger"
+        					></span>
+        				</div>
+        			</div>
+        			
+        			<div class="row">
+        				<div class="form-group">
+	        				<label for="resumo">Resumo</label>
+	        				<textarea rows="5" cols="30"
+	        					class="form-control"
+	        					th:field="*{resumo}">
+	        				</textarea>
+	        				
+        					<span th:if="${#fields.hasErrors('resumo')}"
+        						th:errors="*{resumo}"
+        						class="text-danger"
+        					></span>
+        				</div>
+        			</div> <!-- FIM RESUMO -->
+        			<div class="row">
+        				<div class="form-group">
+        					<label for="nota">Nota</label>
+        					<input type="number" class="form-control"
+        						th:field="*{nota}">
+       						<span th:if="${#fields.hasErrors('nota')}"
+        						th:errors="*{nota}"
+        						class="text-danger"
+        					></span>
+        				</div>
+     				</div> <!-- FIM NOTA -->
+        			<div class="row">
+        				<div class="form-group">
+        					<label for="dataEstreia">Estréia:</label>
+        					<input type="text" class="form-control" 
+        					th:field="*{dataEstreia}"
+th:value="${#temporals.format(serie.dataEstreia, 'dd/MM/yyyy')}">
+
+							<span th:if="${#fields.hasErrors('dataEstreia')}"
+        						th:errors="*{dataEstreia}"
+        						class="text-danger"
+        					></span>
+        				</div>
+       				</div> <!-- FIM DATA ESTREIA -->
+        			
+        			<div class="row">
+        				<div class="form-group">
+        					<label for="dataEncerramento">Fim:</label>
+        					<input type="text" class="form-control" 
+        					th:field="*{dataEncerramento}"
+th:value="${#temporals.format(serie.dataEncerramento, 'dd/MM/yyyy')}">
+
+							<span th:if="${#fields.hasErrors('dataEncerramento')}"
+        						th:errors="*{dataEncerramento}"
+        						class="text-danger"
+        					></span>
+        				</div>
+       				</div> <!-- FIM DATA ENCERRAMENTO -->
+       				<div class="row">
+        				<div class="form-group">
+        					<label for="genero">Gênero</label>
+        					<select class="form-control" 
+        						th:field="*{genero}">
+        						<option value=""> (selecione) </option>
+       						
+        						<option th:each="genero: ${generos}"
+        							th:value="${genero.id}"
+        							th:text="${genero.nome}"></option>
+        					</select>
+        					<span th:if="${#fields.hasErrors('genero')}"
+        						th:errors="*{genero}"
+        						class="text-danger"
+        					></span>
+        				</div>
+       				</div> <!-- FIM GENERO -->
+       				<div class="row">
+        				<div class="form-group">
+        					<label for="produtora">Produtora</label>
+        					<select class="form-control" 
+        						th:field="*{produtora}">
+        						<option value=""> (selecione) </option>
+        						<option th:each="produtora: ${produtoras}"
+        							th:value="${produtora.id}"
+        							th:text="${produtora.nome}"></option>
+        					</select>
+        					<span th:if="${#fields.hasErrors('produtora')}"
+        						th:errors="*{produtora}"
+        						class="text-danger"
+        					></span>
+        				</div>
+       				</div> <!-- FIM PRODUTORA -->
+        			<div class="row">
+        				<button class="btn btn-primary" 
+        					type="submit" >Salvar</button>
+        			</div>
+        		</form>
+        	</div> <!-- FIM div row -->
+        </div>
+    </body>
+</html>
+
+
+
+
+
+
+
+

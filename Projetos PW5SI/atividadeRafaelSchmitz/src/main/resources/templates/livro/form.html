@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Cadastro de Livros</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://unpkg.com/shards-ui@latest/dist/css/shards.min.css">
+    </head>
+    <body>
+        <div class="container my-5">
+        	<h2>Formulário de Cadastro - Livros</h2>
+        	
+        	<div class="row">
+        		<form th:action="@{/livro}" method="post" th:object="${livro}">
+        			<div class="row">
+        				<div class="form-group">
+	        				<label for="id">Código</label>
+	        				<input type="text" class="form-control"
+	        				   th:field="*{id}" readonly/>
+        				</div>
+        			</div>
+        			
+        			<div class="row">
+        				<div class="form-group">
+	        				<label for="nome">Nome</label>
+	        				<input type="text" class="form-control"
+	        					th:field="*{nome}" />
+        					<span th:if="${#fields.hasErrors('nome')}"
+        						th:errors="*{nome}"
+        						class="text-danger"
+        					></span>
+        				</div>
+        			</div>
+
+					<div class="row">
+						<div class="form-group">
+							<label for="ano">Ano</label>
+							<input type="text" class="form-control"
+								   th:field="*{nome}" />
+							<span th:if="${#fields.hasErrors('ano')}"
+								  th:errors="*{ano}"
+								  class="text-danger"
+							></span>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="form-group">
+							<label for="isbn">Isbn</label>
+							<input type="text" class="form-control"
+								   th:field="*{isbn}" />
+							<span th:if="${#fields.hasErrors('isbn')}"
+								  th:errors="*{isbn}"
+								  class="text-danger"
+							></span>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="form-group">
+							<label for="valor">Valor</label>
+							<input type="number" class="form-control"
+								   th:field="*{valor}">
+							<span th:if="${#fields.hasErrors('valor')}"
+								  th:errors="*{valor}"
+								  class="text-danger"
+							></span>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="form-group">
+							<label for="genero">Gênero</label>
+							<select class="form-control"
+									th:field="*{genero}">
+								<option value=""> (selecione) </option>
+
+								<option th:each="genero: ${generos}"
+										th:value="${genero.id}"
+										th:text="${genero.nome}"></option>
+							</select>
+							<span th:if="${#fields.hasErrors('genero')}"
+								  th:errors="*{genero}"
+								  class="text-danger"
+							></span>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="form-group">
+							<label for="editora">Editora</label>
+							<select class="form-control"
+									th:field="*{editora}">
+								<option value=""> (selecione) </option>
+
+								<option th:each="editora: ${editoras}"
+										th:value="${editora.id}"
+										th:text="${editora.nome}"></option>
+							</select>
+							<span th:if="${#fields.hasErrors('editora')}"
+								  th:errors="*{genero}"
+								  class="text-danger"
+							></span>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="form-group">
+							<label for="autor">Autor</label>
+							<select class="form-control"
+									th:field="*{autor}">
+								<option value=""> (selecione) </option>
+
+								<option th:each="autor: ${autores}"
+										th:value="${autor.id}"
+										th:text="${autor.nome}"></option>
+							</select>
+							<span th:if="${#fields.hasErrors('autor')}"
+								  th:errors="*{autor}"
+								  class="text-danger"
+							></span>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="form-group">
+							<label for="cidade">Cidade</label>
+							<select class="form-control"
+									th:field="*{cidade}">
+								<option value=""> (selecione) </option>
+
+								<option th:each="cidade: ${cidades}"
+										th:value="${cidade.id}"
+										th:text="${cidade.nome}"></option>
+							</select>
+							<span th:if="${#fields.hasErrors('cidade')}"
+								  th:errors="*{cidade}"
+								  class="text-danger"
+							></span>
+						</div>
+					</div>
+        			
+        			<div class="row">
+        				<button class="btn btn-primary" 
+        					type="submit" >Salvar</button>
+        			</div>
+        		</form>
+        	</div> <!-- FIM div row -->
+        </div>
+    </body>
+</html>
+
+
+
+
+
+
+
+

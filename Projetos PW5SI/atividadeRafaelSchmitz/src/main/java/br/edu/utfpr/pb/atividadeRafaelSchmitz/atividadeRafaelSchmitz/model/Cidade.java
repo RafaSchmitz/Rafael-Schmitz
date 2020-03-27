@@ -5,6 +5,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 
 @Entity
@@ -19,6 +20,7 @@ public class Cidade implements Serializable {
     private Long id;
 
     @Column(length = 255, nullable = false)
+    @NotEmpty(message = "O campo 'nome' deve ser preenchido!")
     private String nome;
 
 
