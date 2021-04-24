@@ -122,4 +122,10 @@ $(document).ready(function(){
 			});
 		//Count
 	//Cart
+
 });
+
+
+
+
+
