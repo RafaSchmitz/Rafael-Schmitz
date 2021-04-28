@@ -25,7 +25,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable()
                 .exceptionHandling().accessDeniedPage("/403")
                 .and().formLogin().loginPage("/login")
-                .defaultSuccessUrl("/home")
+                .defaultSuccessUrl("/")
                 .failureUrl("/login?error=bad_credentials").permitAll()
                 .and().logout()
                 .logoutSuccessUrl("/login")
@@ -37,7 +37,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/contacts/**").permitAll()
                 .antMatchers("/gallery/**").permitAll()
                 .antMatchers("/product/**").permitAll()
-                .antMatchers("/singup/**").permitAll()
+                .antMatchers("/signup/**").permitAll()
+                .antMatchers("/faq/**").permitAll()
                 .antMatchers("/").permitAll()
                 .antMatchers("/**").authenticated();
     }
