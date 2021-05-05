@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"
       xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/layout.html}">
   <head>
@@ -248,29 +249,34 @@
 
         <!-- Products -->
         <div class="col-sm-9 products">
-          <div class="row" id="Products">
+          <div class="row" id="Products" >
 
-            <!--Products dynamic allocated here -->
+              <div class="col-sm-6 col-md-4 product" th:each="produto : ${produtos}">
+                  <a href="#favorites" class="favorites" data-favorite="inactive"><i class="ion-ios-heart-outline"></i></a>
+                  <a href="./"><img th:src="${produto.img}" /></a>
+
+                  <div class="content">
+                      <h1 class="h4" th:text="${produto.nome}"></h1>
+                      <p class="price" th:text="'R$ ' + ${#numbers.formatDecimal(produto.valor,3,'POINT',2,'COMMA')}">R$</p>
+                      <label>Laptops</label>
+
+                      <a href="../product/" class="btn btn-link"> Details</a>
+                      <button class="btn btn-primary btn-rounded btn-sm" key="`+val.id+`" name="addCart"> <i class="ion-bag"></i> Add to cart</button>
+                  </div>
+              </div>
 
           </div>
 
           <nav>
-            <ul class="pagination">
-              <li>
-                <a href="#" aria-label="Previous">
-                  <span aria-hidden="true"><i class="ion-ios-arrow-left"></i></span>
-                </a>
-              </li>
-              <li class="active"><a href="#">1</a></li>
-              <li><a href="#">2</a></li>
-              <li><a href="#">3</a></li>
-              <li class="disabled"><a href="#">..</a></li>
-              <li><a href="#">10</a></li>
-              <li>
-                <a href="#" aria-label="Next">
-                  <span aria-hidden="true"><i class="ion-ios-arrow-right"></i></span>
-                </a>
-              </li>
+              <ul class="pagination" th:if="${produtos.totalPages > 0}">
+                  <li class="page-item"
+                      th:classappend="${pageNumber==produtos.number + 1} ? active"
+                      th:each="pageNumber: ${pageNumbers}">
+                      <a class="page-link"
+                         th:href="@{/catalog(size=${produtos.size}, page=${pageNumber})}"
+                         th:text="${pageNumber}"></a>
+                  </li>
+              </ul>
             </ul>
           </nav>
         </div>
@@ -388,7 +394,7 @@
     <!-- Include all compiled plugins (below), or include individual files as needed-->
     <script src="../js/bootstrap.min.js"></script>
     <script src="../js/core.js"></script>
-    <script src="../js/produtos.js"></script>
+    <!--<script src="../js/produtos.js"></script>-->
     <script src="../js/catalog.js"></script>
 
     <script type="text/javascript" src="../js/jquery-ui-1.11.4.js"></script>

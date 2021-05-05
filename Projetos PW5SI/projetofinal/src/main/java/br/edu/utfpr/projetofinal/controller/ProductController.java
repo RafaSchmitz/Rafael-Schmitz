@@ -12,5 +12,4 @@ public class ProductController {
     public String product() { return "product/product";}
 
 
-
 }

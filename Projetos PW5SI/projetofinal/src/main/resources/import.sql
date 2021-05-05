@@ -4,6 +4,17 @@ INSERT INTO permissao (nome) values('ROLE_USER');
 INSERT INTO usuario(nome, cpf, telefone, rua, numero, cidade, estado, cep, bairro, email,  username, password) VALUES ('Administrador', '06354809992','46999858352', 'Ibiporã',  '907', 'Pato Branco', 'PR', '00000000', 'Centro', 'rafasch@live.com', 'rafasch@live.com', '$2a$10$.PVIfB07x.SfMYTcToxL0.yxcLWU0GbS2NUO1W1QAvqMm/TsFhVem');
 
 
+insert into produto (nome, descricao, img, valor, categoria_id) values ('HP Chromebook 11','Descrição' , '../img/products/chrome-book-11.jpg', 199.0, null);
+insert into produto (nome, descricao, img, valor, categoria_id) values ('HP Chromebook 14','Descrição' , '../img/products/chrome-book-14.jpg', 209.99, null);
+insert into produto (nome, descricao, img, valor, categoria_id) values ('Asus Chromebook','Descrição' , '../img/products/chrome-book-asus.jpg', 299.99, null);
+insert into produto (nome, descricao, img, valor, categoria_id) values ('iPad Air','Descrição' , '../img/products/ipad-air.jpg', 449.99, null);
+insert into produto (nome, descricao, img, valor, categoria_id) values ('iPad Mini','Descrição' , '../img/products/ipad-mini.jpg', 399.99, null);
+insert into produto (nome, descricao, img, valor, categoria_id) values ('Mi Pad 2','Descrição' , '../img/products/mi-pad-2.jpg', 199.0, null);
+insert into produto (nome, descricao, img, valor, categoria_id) values ('Surface Pro','Descrição' , '../img/products/surface-pro.jpg', 199.0, null);
+insert into produto (nome, descricao, img, valor, categoria_id) values ('Lenovo Yoga','Descrição' , '../img/products/lenovo-yoga.jpg', 199.0, null);
+insert into produto (nome, descricao, img, valor, categoria_id) values ('ASUS Transformer','Descrição' , '../img/products/asus-transformer.jpg', 199.0, null);
+
+
 INSERT INTO usuario_permissoes(usuario_id, permissoes_id) VALUES (1, 1);
 
 

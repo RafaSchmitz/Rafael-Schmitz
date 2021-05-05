@@ -1,84 +1,10 @@
-const items = [
-    {
-        id:0,
-        nome: "HP Chromebook 11",
-        valor: 199.99,
-        img: "../img/products/chrome-book-11.jpg",
-        qtd: 0
-    },
-
-    {
-        id:1,
-        nome: "HP Chromebook 14",
-        valor: 209.99,
-        img: "../img/products/chrome-book-14.jpg",
-        qtd: 0
-    },
-
-    {
-        id:2,
-        nome: "Asus Chromebook",
-        valor: 299.99,
-        img: "../img/products/chrome-book-asus.jpg",
-        qtd: 0
-    },
-
-    {
-        id:3,
-        nome: "iPad Air",
-        valor: 449.99,
-        img: "../img/products/ipad-air.jpg",
-        qtd: 0
-    },
-
-    {
-        id:4,
-        nome: "iPad Mini",
-        valor: 399.99,
-        img: "../img/products/ipad-mini.jpg",
-        qtd: 0
-    },
-
-    {
-        id:5,
-        nome: "Mi Pad 2",
-        valor: 199.99,
-        img: "../img/products/mi-pad-2.jpg",
-        qtd: 0
-    },
-
-    {
-        id:6,
-        nome: "Surface Pro",
-        valor: 199.99,
-        img: "../img/products/surface-pro.jpg",
-        qtd: 0
-    },
-
-    {
-        id:7,
-        nome: "Lenovo Yoga",
-        valor: 199.99,
-        img: "../img/products/lenovo-yoga.jpg",
-        qtd: 0
-    },
-
-    {
-        id:8,
-        nome: "ASUS Transformer",
-        valor: 199.99,
-        img: "../img/products/asus-transformer.jpg",
-        qtd: 0
-    }
-
-]
 
 function inicializar(){
     var containerProdutos = document.getElementById('Products');
     items.map((val)=>{
         containerProdutos.innerHTML += `
 
-              <div class="col-sm-6 col-md-4 product">
+            <div class="col-sm-6 col-md-4 product">
               <a href="#favorites" class="favorites" data-favorite="inactive"><i class="ion-ios-heart-outline"></i></a>
               <a href="./"><img src="`+val.img+`"/></a>
 
