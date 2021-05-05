@@ -2,6 +2,7 @@
 <html lang="en"
       xmlns="http://www.w3.org/1999/xhtml"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
       layout:decorate="~{layout/layout.html}">
 
   <head>
@@ -84,15 +85,17 @@
 
     <hr class="offset-lg">
 
-    <div class="product">
+    // Produto
+    <div class="product"  >
     	<div class="container">
         <div class="row">
           <div class="col-sm-7 col-md-7">
             <div class="carousel product" data-count="5" data-current="1">
               <!-- <button class="btn btn-control"></button> -->
 
-              <div class="items">
-                <div class="item active" data-marker="1">
+              <div class="items" >
+
+                <div class="item active" data-marker="1" >
                   <img src="../img/product/1.jpg" alt="ChromeBook 11"/>
                 </div>
                 <div class="item" data-marker="2">
@@ -127,7 +130,7 @@
               </div>
 
               <ul class="markers">
-                <li data-marker="1" class="active"><img src="../img/product/1.jpg" alt="Background"/></li>
+                <li data-marker="1" class="active"><img src="../img/product/1.jpg"  alt="Background"/></li>
                 <li data-marker="2"><img src="../img/product/2.jpg" alt="Background"/></li>
                 <li data-marker="3"><img src="../img/product/3.jpg" alt="Background"/></li>
                 <li data-marker="4"><img src="../img/product/4.jpg" alt="Background"/></li>
@@ -138,6 +141,7 @@
           </div>
           <div class="col-sm-5 col-md-5">
             <img src="../img/brands/hp.png" alt="HP" class="brand hidden-xs" />
+
 
             <h1>HP Chromebook 11</h1>
 
@@ -260,9 +264,11 @@
 	    	</div>
     	</div>
     </div>
+
     <br><br>
 
     <section class="products">
+
         <div class="container">
             <h1 class="h3">Recommendation for you</h1>
             

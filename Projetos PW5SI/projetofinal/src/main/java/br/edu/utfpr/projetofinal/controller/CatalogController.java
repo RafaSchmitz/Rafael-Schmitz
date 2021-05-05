@@ -8,6 +8,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -23,16 +24,6 @@ public class CatalogController {
     @Autowired
     private ProdutoService produtoService;
 
-//    @GetMapping
-//    public String catalog() {
-//        return "catalog/index";
-//    }
-
-//    @GetMapping("old")
-//    public String list(Model model) {
-//        model.addAttribute("produtos", produtoService.findAll());
-//        return "catalog/index";
-//    }
 
     @GetMapping() // /produto?page=1&size=6
     public String list(
