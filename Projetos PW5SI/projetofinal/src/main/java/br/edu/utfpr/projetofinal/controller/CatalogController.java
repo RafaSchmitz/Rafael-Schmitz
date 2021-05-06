@@ -1,6 +1,7 @@
 package br.edu.utfpr.projetofinal.controller;
 
 import br.edu.utfpr.projetofinal.model.Produto;
+import br.edu.utfpr.projetofinal.service.CategoriaService;
 import br.edu.utfpr.projetofinal.service.ProdutoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -24,6 +25,13 @@ public class CatalogController {
     @Autowired
     private ProdutoService produtoService;
 
+    @Autowired
+    private CategoriaService categoriaService;
+
+    private void carregarCombos(Model model) {
+        model.addAttribute("categorias", categoriaService.findAll());
+
+    }
 
     @GetMapping() // /produto?page=1&size=6
     public String list(
@@ -43,8 +51,35 @@ public class CatalogController {
             model.addAttribute("pageNumbers", pageNumbers);
         }
 
+        carregarCombos(model);
+
         return "catalog/index";
     }
+
+    @GetMapping("{id}")
+    public String list(
+            @RequestParam("page") Optional<Integer> page,
+            @RequestParam("size") Optional<Integer> size,
+            @PathVariable Long id,
+            Model model) {
+        int currentPage = page.orElse(1);
+        int pageSize = size.orElse(6);
+
+        Page<Produto> list = this.produtoService.findAllByCategoriaId(id, PageRequest.of(currentPage - 1, pageSize));
+
+        model.addAttribute("produtos", list);
+
+        if (list.getTotalPages() > 0) {
+            List<Integer> pageNumbers = IntStream.rangeClosed(1, list.getTotalPages())
+                    .boxed().collect(Collectors.toList());
+            model.addAttribute("pageNumbers", pageNumbers);
+        }
+
+        carregarCombos(model);
+
+        return "catalog/index";
+    }
+
 
 
 

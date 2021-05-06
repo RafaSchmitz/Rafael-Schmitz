@@ -36,4 +36,6 @@ public class Produto implements Serializable {
     @JoinColumn(name = "categoria_id", referencedColumnName = "id")
     private Categoria categoria;
 
+
+
 }

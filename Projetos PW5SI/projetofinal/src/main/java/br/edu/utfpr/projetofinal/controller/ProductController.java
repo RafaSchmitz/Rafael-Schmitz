@@ -20,4 +20,6 @@ public class ProductController {
         model.addAttribute("produto", produtoService.findOne(id));
         return "product/product";
     }
+
+
 }
