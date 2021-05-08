@@ -5968,3 +5968,13 @@ button.close {
     transition: all 0.3s ease;
   }
 /* Transitions */
+
+.left{
+  float:left; /*<---*/
+  width: 50%;
+}
+.right {
+  float: left; /*<---*/
+  width: 50%;
+  border: #1b6d85;
+}

@@ -10,15 +10,15 @@ insert into categoria(nome) values('Hybrids');
 
 
 
-insert into produto (nome, descricao, img, valor, categoria_id) values ('HP Chromebook 11','Descrição' , '../img/products/chrome-book-11.jpg', 199.0, 1);
-insert into produto (nome, descricao, img, valor, categoria_id) values ('HP Chromebook 14','Descrição' , '../img/products/chrome-book-14.jpg', 209.99, 1);
-insert into produto (nome, descricao, img, valor, categoria_id) values ('Asus Chromebook','Descrição' , '../img/products/chrome-book-asus.jpg', 299.99, 1);
-insert into produto (nome, descricao, img, valor, categoria_id) values ('iPad Air','Descrição' , '../img/products/ipad-air.jpg', 449.99, 2);
-insert into produto (nome, descricao, img, valor, categoria_id) values ('iPad Mini','Descrição' , '../img/products/ipad-mini.jpg', 399.99, 2);
-insert into produto (nome, descricao, img, valor, categoria_id) values ('Mi Pad 2','Descrição' , '../img/products/mi-pad-2.jpg', 199.0, 2);
-insert into produto (nome, descricao, img, valor, categoria_id) values ('Surface Pro','Descrição' , '../img/products/surface-pro.jpg', 199.0, 3);
-insert into produto (nome, descricao, img, valor, categoria_id) values ('Lenovo Yoga','Descrição' , '../img/products/lenovo-yoga.jpg', 199.0, 3);
-insert into produto (nome, descricao, img, valor, categoria_id) values ('ASUS Transformer','Descrição' , '../img/products/asus-transformer.jpg', 199.0, 3);
+insert into produto (nome, img, valor, categoria_id) values ('HP Chromebook 11', '../img/products/chrome-book-11.jpg', 199.0, 1);
+insert into produto (nome, img, valor, categoria_id) values ('HP Chromebook 14', '../img/products/chrome-book-14.jpg', 209.99, 1);
+insert into produto (nome, img, valor, categoria_id) values ('Asus Chromebook', '../img/products/chrome-book-asus.jpg', 299.99, 1);
+insert into produto (nome, img, valor, categoria_id) values ('iPad Air', '../img/products/ipad-air.jpg', 449.99, 2);
+insert into produto (nome, img, valor, categoria_id) values ('iPad Mini', '../img/products/ipad-mini.jpg', 399.99, 2);
+insert into produto (nome, img, valor, categoria_id) values ('Mi Pad 2', '../img/products/mi-pad-2.jpg', 199.0, 2);
+insert into produto (nome, img, valor, categoria_id) values ('Surface Pro', '../img/products/surface-pro.jpg', 199.0, 3);
+insert into produto (nome, img, valor, categoria_id) values ('Lenovo Yoga', '../img/products/lenovo-yoga.jpg', 199.0, 3);
+insert into produto (nome, img, valor, categoria_id) values ('ASUS Transformer', '../img/products/asus-transformer.jpg', 199.0, 3);
 
 
 
