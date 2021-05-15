@@ -86,26 +86,26 @@
         <!-- /// -->
 
         <!-- Products -->
+
         <div class="col-sm-9 products">
             <form th:id="frm" th:action="@{/catalog/}" method="post"
                   th:object="${pedido}"
                   onsubmit="return finalizarCompra('/checkout');">
 
-          <div class="row" id="Products" >
-               <div class="col-sm-6 col-md-4 product" th:each="produto : ${produtos}"
-                    th:id="ProductId" th:name="ProductId" th:data-id="${produto.id}">
+               <div class="col-sm-6 col-md-4 product" th:each="produto : ${produtos}">
 
+                   <input  class="ProductId" th:name="ProductId" th:value="${produto.id}" th:data-id="${produto.id}" hidden></input>
                   <a href="#favorites" class="favorites" data-favorite="inactive"><i class="ion-ios-heart-outline"></i></a>
-                  <a href="./"><img th:src="${produto.img}" th:id="ProductImg" /></a>
+                  <a href="./"><img th:id="'img_'+ ${produto.id}" th:data-img="${produto.img}" th:src="${produto.img}" class="ProductImg" /></a>
 
                    <div class="content">
-                      <h1 class="h4" th:text="${produto.nome}" th:id="ProductName"  th:data-nome="${produto.nome}"></h1>
-                      <p class="price" th:id="ProductValor" th:text="'R$ ' + ${#numbers.formatDecimal(produto.valor,3,'POINT',2,'COMMA')}"
+                      <h1 class="h4 ProductName" th:data-nome="${produto.nome}" th:id="'nome_'+ ${produto.id}" th:text="${produto.nome}"></h1>
+                      <p class="price ProductValor" th:id="'valor_'+ ${produto.id}" th:text="'R$ ' + ${#numbers.formatDecimal(produto.valor,3,'POINT',2,'COMMA')}"
                          th:data-valor="${produto.valor}" ></p>
 
                       <!--//Categoria-->
 
-                      <label th:text="${produto.categoria.nome}" th:id="ProductCat" class="cat"></label>
+                      <label th:text="${produto.categoria.nome}"  class="cat"></label>
 
                       <div class="row" >
                               <div class="left">
@@ -113,7 +113,7 @@
                               </div>
                               <div class="right">
                                   <input type="number" min="1" max="100" step="1" class="qtd" placeholder="1"
-                                         th:id="quantidade" th:value="1"/>
+                                         th:id="'qtd_'+ ${produto.id}" th:value="1"/>
                               </div>
 
                       </div>
@@ -121,12 +121,13 @@
 
 
                       <a th:href="@{/product/{id}(id=${produto.id})}" class="btn btn-link"> Ver mais</a>
-                      <button class="btn btn-primary btn-rounded btn-sm" type="button"  name="addCart" onclick="adicionarProduto()"> <i class="ion-bag"></i> Add to cart</button>
+                      <button class="btn btn-primary btn-rounded btn-sm" type="button"  name="addCart" th:onclick="adicionarProduto([[${produto.id}]]);"> <i class="ion-bag"></i> Add to cart</button>
                   </div>
               </div>
 
-          </div>
             </form>
+          </div>
+
           <nav>
               <ul class="pagination" th:if="${produtos.totalPages > 0}">
                   <li class="page-item"
@@ -142,6 +143,7 @@
         </div>
         <!-- /// -->
       </div>
+
     </div>
     <br><br>
 

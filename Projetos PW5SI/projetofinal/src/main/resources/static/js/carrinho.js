@@ -1,14 +1,15 @@
 let pedidoProdutos = [];
 
-function adicionarProduto() {
+function adicionarProduto(id) {
     let pedidoProduto = new Object();
     pedidoProduto.id = new Object();
     pedidoProduto.id.produto = new Object();
 
-    pedidoProduto.id.produto.id = $('#ProductId').data('id');
-    pedidoProduto.id.produto.nome = $('#ProductName').data('nome');
-    pedidoProduto.valor = $('#ProductValor').data('valor');
-    pedidoProduto.quantidade = $('#quantidade').val();
+    pedidoProduto.id.produto.id = $('.ProductId').val(id);
+    pedidoProduto.id.produto.nome = $('#nome_'+id).text();
+    pedidoProduto.img = $('#img_' + id).data('img');
+    pedidoProduto.valor = $('#valor_' + id).data('valor');
+    pedidoProduto.quantidade = $('#qtd_' + id).val();
 
     pedidoProdutos.push(pedidoProduto);
     adicionarLinhaCarrinho( criarLinha(pedidoProduto) );
@@ -20,6 +21,7 @@ function removerProduto() {
 
 function criarLinha(pedidoProduto) {
     return `
+   
     <tr id="${pedidoProduto.id.produto.id}">
     	<td name="produto"><span>${pedidoProduto.id.produto.nome}</span></td>
 		<td name="quantidade" style="text-align: right"><span>${pedidoProduto.quantidade}</span></td>
@@ -47,11 +49,7 @@ function adicionarLinhaCarrinho(linha) {
 
 function finalizarCompra(urlDestino) {
     let compra = new Object();
-    compra.compraProdutos = compraProdutos;
-    compra.fornecedor = new Object();
-    compra.fornecedor.id = $('#fornecedor').val();
-    compra.notaFiscal = $('#notaFiscal').val();
-    compra.observacoes = $('#observacoes').val();
+    compra.pedidoProdutos = pedidoProduto;
 
     $.ajax({
         type: $('#frm').attr('method'),
