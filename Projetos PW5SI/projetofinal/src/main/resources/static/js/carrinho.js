@@ -12,26 +12,36 @@ function adicionarProduto(id) {
     pedidoProduto.quantidade = $('#qtd_' + id).val();
 
     pedidoProdutos.push(pedidoProduto);
-    adicionarLinhaCarrinho( criarLinha(pedidoProduto) );
+
+
+    localStorage.setItem("pedidos", JSON.stringify(pedidoProduto));
+    alert("Produto adicionado com sucesso!");
+
+    tbCarrinho = JSON.parse(localStorage.getItem('pedidos'));
+
+    adicionarLinhaCarrinho(criarLinha(tbCarrinho) );
+
+
+
 }
 
 function removerProduto() {
     // TO-DO
 }
 
-function criarLinha(pedidoProduto) {
+function criarLinha(tbCarrinho) {
     return `
    
-    <tr id="${pedidoProduto.id.produto.id}">
-    	<td name="produto"><span>${pedidoProduto.id.produto.nome}</span></td>
-		<td name="quantidade" style="text-align: right"><span>${pedidoProduto.quantidade}</span></td>
+    <tr id="${tbCarrinho.id.produto.id}">
+    	<td name="produto"><span>${tbCarrinho.id.produto.nome}</span></td>
+		<td name="quantidade" style="text-align: right"><span>${tbCarrinho.quantidade}</span></td>
     	<td name="valor" style="text-align: right">
     		<span>${new Intl.NumberFormat('pt-BR',{ style: 'currency', currency: 'BRL'})
-        .format(pedidoProduto.valor)}</span>
+        .format(tbCarrinho.valor)}</span>
     	</td>
     	<td name="valor" style="text-align: right">
     		<span>${new Intl.NumberFormat('pt-BR',{ style: 'currency', currency: 'BRL'})
-        .format(pedidoProduto.valor * pedidoProduto.quantidade)}</span>
+        .format(tbCarrinho.valor * tbCarrinho.quantidade)}</span>
     	</td>
     	<td><a onclick="removerProduto(this, event);"><i class="fa fa-trash ml-2" title="Remover produto" data-toggle="tooltip"></i></a></td>
     </tr>

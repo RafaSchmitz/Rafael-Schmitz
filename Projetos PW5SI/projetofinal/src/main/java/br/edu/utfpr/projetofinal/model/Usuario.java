@@ -39,24 +39,6 @@ public class Usuario implements Serializable,
     private String telefone;
 
     @Column(length = 255, nullable = false)
-    private String rua;
-
-    @Column(length = 255, nullable = false)
-    private String numero;
-
-    @Column(length = 255, nullable = false)
-    private String cidade;
-
-    @Column(length = 2, nullable = false)
-    private String estado;
-
-    @Column(length = 8, nullable = false)
-    private String cep;
-
-    @Column(length = 255, nullable = false)
-    private String bairro;
-
-    @Column(length = 255, nullable = false)
     private String email;
 
     @Column(length = 255, nullable = false)

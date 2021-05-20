@@ -18,11 +18,10 @@
           <br>
 
           <form class="" th:action="@{/login}" method="POST">
-            <input type="email"  placeholder="E-mail" id="username"  name="username"  class="form-control" />
+            <input type="text"  placeholder="Usuário" id="username"  name="username"  class="form-control" />
             <br>
             <input type="password"  id="password" name="password"  placeholder="Password"  class="form-control" />
             <br>
-
             <button type="submit" class="btn btn-primary" value="Sign in" onclick="login()">Sign In</button>
             <div class="alert alert-danger" th:if="${#bools.isTrue(param.error)}">
               O usuário e/ou senha inválido(s)!
@@ -40,7 +39,7 @@
           <hr class="offset-sm">
 
           <p>
-            Don't have an account? Create one now! <a href="../signup/"> Registration > </a>
+            Don't have an account? Create one now! <a th:href="@{/signup/new}"> Registration > </a>
           </p>
         </div>
       </div>
